@@ -1,6 +1,9 @@
+import { Button } from "@/components/button";
 
 export default function Home() {
   return (
-    <div>Hello nerds!</div>
+    <div>
+      <Button className="font-bold" label="Submit" intent="secondary" size="s"/>
+    </div>
   );
 }
