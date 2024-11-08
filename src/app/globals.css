@@ -11,9 +11,13 @@ body,
 @layer base {
     :root {
         --text: 0 0% 15%;
+        --text-secondary: 0 0% 45%;
         --background: 0 0% 92%;
+
         --primary: 102 54% 18%;
+        --primary-contrast: 282 54% 95%;
         --secondary: 101 31% 62%;
+        --secondary-contrast: 282 54% 95%;
         --accent: 52 74% 60%;
     }
     .dark {
@@ -29,5 +33,14 @@ body,
     * {
     }
     body {
+    }
+
+    h1 {
+        @apply text-3xl;
+        @apply font-bold;
+    }
+    h2 {
+        @apply text-2xl;
+        @apply font-bold;
     }
 }

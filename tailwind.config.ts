@@ -20,7 +20,19 @@ const config = {
         extend: {
             colors: {
                 background: "hsl(var(--background))",
-                primary: "hsl(var(--primary))",
+                primary: {
+                    DEFAULT: "hsl(var(--primary))",
+                    contrast: "hsl(var(--primary-contrast))",
+                },
+                secondary: {
+                    DEFAULT: "hsl(var(--secondary))",
+                    contrast: "hsl(var(--secondary-contrast))",
+                },
+
+                text: {
+                    DEFAULT: "hsl(var(--text))",
+                    secondary: "hsl(var(--text-secondary))",
+                },
             },
         },
     },
