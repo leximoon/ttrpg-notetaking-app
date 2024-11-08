@@ -14,9 +14,16 @@ const meta = {
             control: "select",
             options: ["primary", "secondary"],
         },
+        variant: {
+            control: "select",
+            options: ["fill", "dashed"],
+        },
         size: {
             control: "select",
             options: ["s", "m", "l"],
+        },
+        fillOut: {
+            control: "boolean",
         },
         onClick: { action: "clicked" },
     },
