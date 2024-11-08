@@ -5,10 +5,11 @@
 html,
 body,
 :root {
-  height: 100%;
+    height: 100%;
 }
 
 @layer base {
+<<<<<<< HEAD
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -80,13 +81,27 @@ body,
     --accent: 52 74% 40%;
   }
     */
+=======
+    :root {
+        --text: 0 0% 15%;
+        --background: 0 0% 92%;
+        --primary: 102 54% 18%;
+        --secondary: 101 31% 62%;
+        --accent: 52 74% 60%;
+    }
+    .dark {
+        --text: 0 0% 85%;
+        --background: 0 0% 8%;
+        --primary: 102 54% 82%;
+        --secondary: 101 31% 38%;
+        --accent: 52 74% 40%;
+    }
+>>>>>>> origin/control-panel
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    * {
+    }
+    body {
+    }
 }
