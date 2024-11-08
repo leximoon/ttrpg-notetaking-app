@@ -63,6 +63,23 @@ body,
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+
+  /* Possible color themes
+  :root {
+    --text: 0 0% 15%;
+    --background: 0 0% 92%;
+    --primary: 102 54% 18%;
+    --secondary: 101 31% 62%;
+    --accent: 52 74% 60%;
+  }
+  .dark {
+    --text: 0 0% 85%;
+    --background: 0 0% 8%;
+    --primary: 102 54% 82%;
+    --secondary: 101 31% 38%;
+    --accent: 52 74% 40%;
+  }
+    */
 }
 
 @layer base {
