@@ -66,7 +66,7 @@ const Toggle: React.FC<ToggleProps> = ({ checked = false, onChange, size }) => {
                                 : size === "m"
                                 ? "translate-x-8"
                                 : "translate-x-10"
-                            : "translate-x-1"
+                            : "translate-x-1" // TODO: Check how to make if without else
                     }`}
             ></span>
         </label>
