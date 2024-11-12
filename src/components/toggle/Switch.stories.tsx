@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Toggle } from "./toggle";
+import { Switch } from "./switch";
 
 const meta = {
-    title: "UI/Toggle",
-    component: Toggle,
+    title: "UI/Switch",
+    component: Switch,
     parameters: {
         layout: "centered",
     },
@@ -15,19 +15,18 @@ const meta = {
             options: ["s", "m"],
         },
     },
-} satisfies Meta<typeof Toggle>;
+} satisfies Meta<typeof Switch>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/*
- * Size
- */
+//Switch size story
+
 export const Size: Story = {
     render: (args) => (
         <div className="flex gap-4">
-            <Toggle {...args} size="s" />
-            <Toggle {...args} size="m" />
+            <Switch {...args} size="s" />
+            <Switch {...args} size="m" />
         </div>
     ),
 };
@@ -38,8 +37,8 @@ export const Size: Story = {
 export const Color: Story = {
     render: (args) => (
         <div className="flex gap-4">
-            <Toggle {...args} color="primary" />
-            <Toggle {...args} color="secondary" />
+            <Switch {...args} color="primary" />
+            <Switch {...args} color="secondary" />
         </div>
     ),
 };

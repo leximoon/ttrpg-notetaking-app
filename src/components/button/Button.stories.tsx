@@ -32,11 +32,17 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
+/**
+ * Base Story
+ */
+
 export const Single: Story = {
     args: {
         label: "Button",
     },
 };
+
+//Button color Story
 
 export const Intent: Story = {
     args: {
@@ -50,6 +56,8 @@ export const Intent: Story = {
     ),
 };
 
+//Button form Story
+
 export const Variants: Story = {
     args: {
         fillOut: false,
@@ -61,6 +69,8 @@ export const Variants: Story = {
         </div>
     ),
 };
+
+//Button sizes Story
 
 export const Sizes: Story = {
     args: {
