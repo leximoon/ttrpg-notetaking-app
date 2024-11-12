@@ -8,9 +8,8 @@ const NavList = () => {
             <ul className="space-y-2 font-normal">
                 {navLinks.map((link, index) => {
                     return (
-                        <li>
+                        <li key={index}>
                             <Link
-                                key={index}
                                 href={`/panel${link.path}`}
                                 className="flex items-center p-2 rounded-lg hover:bg-primary/15"
                             >
