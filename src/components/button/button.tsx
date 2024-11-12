@@ -82,6 +82,7 @@ const Button = ({
                 size,
                 variant,
             })}`}
+            {...props}
         >
             {label}
         </button>

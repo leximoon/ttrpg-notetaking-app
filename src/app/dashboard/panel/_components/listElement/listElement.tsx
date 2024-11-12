@@ -10,7 +10,6 @@ const ListElement = ({
     name,
     description,
     icon = <Map />,
-    ...props
 }: ListElementProps) => {
     return (
         <>

@@ -49,9 +49,8 @@ const Switch: React.FC<SwitchProps> = ({
     onChange,
     size,
     color,
-    ...props
 }) => {
-    const [isChecked, setIsChecked] = React.useState(checked);
+    const [isChecked, setIsChecked] = useState(checked);
 
     //Function to handle any internal control in the switch and triggers the onChange function if setted.
     const handleSwitch = () => {

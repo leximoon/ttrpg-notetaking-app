@@ -2,7 +2,7 @@ import { Button } from "@/components/button";
 import { ListElement } from "./_components/listElement";
 import { Trees } from "lucide-react";
 
-export default function () {
+export default function ControlPanelPage() {
     return (
         <>
             <div className="w-full">
@@ -24,31 +24,6 @@ export default function () {
                             <ListElement
                                 name="World name"
                                 description="Description of world"
-                            />
-                            <ListElement
-                                name="World name"
-                                description="Description of world"
-                                icon={<Trees />}
-                            />
-                            <ListElement
-                                name="World name"
-                                description="Description of world"
-                                icon={<Trees />}
-                            />
-                            <ListElement
-                                name="World name"
-                                description="Description of world"
-                                icon={<Trees />}
-                            />
-                            <ListElement
-                                name="World name"
-                                description="Description of world"
-                                icon={<Trees />}
-                            />
-                            <ListElement
-                                name="World name"
-                                description="Description of world"
-                                icon={<Trees />}
                             />
                         </ul>
                     </div>
