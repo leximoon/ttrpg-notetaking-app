@@ -1,6 +1,6 @@
 "use client";
 import { cva, VariantProps } from "class-variance-authority";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 //Controls the variants for the background of the switch
@@ -51,6 +51,10 @@ const Switch: React.FC<SwitchProps> = ({
     color,
 }) => {
     const [isChecked, setIsChecked] = useState(checked);
+
+    useEffect(() => {
+        setIsChecked(checked);
+    }, [checked]);
 
     //Function to handle any internal control in the switch and triggers the onChange function if setted.
     const handleSwitch = () => {
