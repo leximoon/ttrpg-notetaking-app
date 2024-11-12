@@ -19,13 +19,23 @@ body,
         --secondary: 101 31% 62%;
         --secondary-contrast: 282 54% 95%;
         --accent: 52 74% 60%;
+
+        --shadow-color: 0 0% 82%;
+        --card: 0 0% 98%;
     }
     .dark {
         --text: 0 0% 85%;
-        --background: 0 0% 8%;
+        --text-secondary: 0 0% 45%;
+        --background: 0 0% 12%;
+
         --primary: 102 54% 82%;
+        --primary-contrast: 282 54% 95%;
         --secondary: 101 31% 38%;
+        --secondary-contrast: 282 54% 95%;
         --accent: 52 74% 40%;
+
+        --shadow-color: 0 0% 7%;
+        --card: 0 0% 20%;
     }
 }
 
@@ -33,6 +43,8 @@ body,
     * {
     }
     body {
+        @apply bg-background;
+        @apply text-text;
     }
 
     h1 {
