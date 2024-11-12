@@ -1,21 +1,30 @@
 "use client";
 import { cva, VariantProps } from "class-variance-authority";
 import React, { useState } from "react";
+import { twMerge } from "tailwind-merge";
 
-const toggleVariants = cva("rounded-full transition-colors", {
-    variants: {
-        size: {
-            s: "w-10 h-5",
-            m: "w-16 h-8",
+const toggleVariants = cva(
+    "relative inline-flex items-center rounded-full transition-colors",
+    {
+        variants: {
+            size: {
+                s: "w-10 h-5",
+                m: "w-16 h-8",
+            },
+            color: {
+                primary: "bg-primary",
+                secondary: "bg-secondary",
+            },
         },
-    },
 
-    defaultVariants: {
-        size: "m",
-    },
-});
+        defaultVariants: {
+            size: "m",
+            color: "primary",
+        },
+    }
+);
 
-const dotVariants = cva(
+const thumbVariants = cva(
     "absolute bg-white rounded-full shadow transform transition-transform",
     {
         variants: {
@@ -23,6 +32,10 @@ const dotVariants = cva(
                 s: "w-4 h-4",
                 m: "w-7 h-7",
             },
+        },
+
+        defaultVariants: {
+            size: "m",
         },
     }
 );
@@ -32,44 +45,51 @@ interface ToggleProps extends VariantProps<typeof toggleVariants> {
     onChange?: (checked: boolean) => void;
 }
 
-const Toggle: React.FC<ToggleProps> = ({ checked = false, onChange, size }) => {
-    const [isToggled, setIsToggled] = useState(checked);
+const Toggle: React.FC<ToggleProps> = ({
+    checked = false,
+    onChange,
+    size,
+    color,
+    ...props
+}) => {
+    const [isChecked, setIsChecked] = React.useState(checked);
+
+    React.useEffect(() => {
+        setIsChecked(checked);
+    }, [checked]);
 
     const handleToggle = () => {
-        const newChecked = !isToggled;
-        setIsToggled(newChecked);
-        if (onChange) {
-            onChange(newChecked);
-        }
+        const newChecked = !isChecked;
+        setIsChecked(newChecked);
+        onChange?.(newChecked);
     };
 
     return (
-        <label className="relative inline-flex items-center cursor-pointer">
-            <input
-                type="checkbox"
-                className="sr-only"
-                checked={isToggled}
-                onChange={handleToggle}
-            />
-            <div
-                className={`${toggleVariants({ size })} ${
-                    isToggled ? "bg-primary" : "bg-gray-300"
-                }`}
-            ></div>
+        <button
+            type="button"
+            role="switch"
+            aria-checked={isChecked}
+            //Class name for the background
+            className={twMerge(
+                toggleVariants({ size }),
+                isChecked ? toggleVariants({ color, size }) : "bg-gray-300"
+            )}
+            onClick={handleToggle}
+            {...props}
+        >
             <span
-                className={`absolute bg-white rounded-full shadow transform transition-transform 
-                    ${dotVariants({ size })}
-                    ${
-                        isToggled
-                            ? size === "s"
-                                ? "translate-x-5"
-                                : size === "m"
-                                ? "translate-x-8"
-                                : "translate-x-10"
-                            : "translate-x-1" // TODO: Check how to make if without else
-                    }`}
-            ></span>
-        </label>
+                //Cass name for the moving dot
+                className={twMerge(
+                    thumbVariants({ size }),
+                    "block transition-transform",
+                    isChecked
+                        ? size === "s"
+                            ? "translate-x-5"
+                            : "translate-x-8"
+                        : "translate-x-1"
+                )}
+            />
+        </button>
     );
 };
 
