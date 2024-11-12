@@ -30,6 +30,7 @@ const button = cva("button rounded-lg", {
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof button> { label?: string }
 
+// TODO: add icon possibility
 const Button = ({ intent, size, className, label, onClick, ...props }: ButtonProps) => {
     return ( <button onClick={ onClick } className= {button({ className, intent, size})}>{ label }</button> );
 }
