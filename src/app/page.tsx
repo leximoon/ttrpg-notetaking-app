@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import { Button } from "@/components/UI/button";
 
 export default function Home() {
     return (

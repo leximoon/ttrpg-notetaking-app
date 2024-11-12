@@ -1,5 +1,5 @@
-import { Button } from "@/components/button";
-import { ListElement } from "./_components/listElement";
+import { Button } from "@/components/UI/button";
+import { ListElement } from "../_components/listElement";
 import { Trees } from "lucide-react";
 
 export default function ControlPanelPage() {
