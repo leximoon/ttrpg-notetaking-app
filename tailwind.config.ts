@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config = {
-    darkMode: ["class"],
+    darkMode: "class",
     content: [
         "./pages/**/*.{ts,tsx}",
         "./components/**/*.{ts,tsx}",
@@ -20,7 +20,31 @@ const config = {
         extend: {
             colors: {
                 background: "hsl(var(--background))",
-                primary: "hsl(var(--primary))",
+                primary: {
+                    DEFAULT: "hsl(var(--primary))",
+                    contrast: "hsl(var(--primary-contrast))",
+                },
+                secondary: {
+                    DEFAULT: "hsl(var(--secondary))",
+                    contrast: "hsl(var(--secondary-contrast))",
+                },
+
+                text: {
+                    DEFAULT: "hsl(var(--text))",
+                    secondary: "hsl(var(--text-secondary))",
+                },
+
+                shadowColor: {
+                    DEFAULT: "hsl(var(--shadow-color))",
+                },
+
+                card: {
+                    DEFAULT: "hsl(var(--card))",
+                },
+
+                border: {
+                    DEFAULT: "hsl(var(--border))",
+                },
             },
         },
     },
