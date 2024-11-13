@@ -10,7 +10,7 @@ interface ThemeSwitchProps {
 }
 
 const ThemeSwitch = ({ label }: ThemeSwitchProps) => {
-    const { setTheme, theme, resolvedTheme } = useTheme();
+    const { setTheme, resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const ThemeSwitch = ({ label }: ThemeSwitchProps) => {
         <div className="flex flex-row ">
             <span className="mx-2 font-semibold">{label}</span>
             <Sun className="w-5 mx-2" />
+            
             <Switch
                 size="s"
                 onChange={selectTheme}

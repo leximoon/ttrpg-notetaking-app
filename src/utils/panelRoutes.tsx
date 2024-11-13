@@ -1,4 +1,4 @@
-import { Earth, User, Star } from "lucide-react";
+import { Earth, User } from "lucide-react";
 
 export const navLinks = [
     { name: "Worlds", path: "/worlds", icon: <Earth /> },
