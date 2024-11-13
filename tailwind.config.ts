@@ -41,6 +41,10 @@ const config = {
                 card: {
                     DEFAULT: "hsl(var(--card))",
                 },
+
+                border: {
+                    DEFAULT: "hsl(var(--border))",
+                },
             },
         },
     },
