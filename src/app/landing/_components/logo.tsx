@@ -15,6 +15,9 @@ export const Logo = () => {
             width="40"
             alt="Logo"
             />
+        <p className="font-semibold text-text">
+            BookWyrm
+        </p>
         </div>
     )
 }
