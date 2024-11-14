@@ -1,5 +1,5 @@
 'use client';
-import { Button } from "@/components/button"; // Not server component
+import { Button } from "@/components/UI/button"; // Not server component
 
 // TODO: add arrow right icon to button
 const Header = () => {
