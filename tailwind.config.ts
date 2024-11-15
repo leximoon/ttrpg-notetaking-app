@@ -23,10 +23,12 @@ const config = {
                 primary: {
                     DEFAULT: "hsl(var(--primary))",
                     contrast: "hsl(var(--primary-contrast))",
+                    muted: "hsl(var(--primary-muted))",
                 },
                 secondary: {
                     DEFAULT: "hsl(var(--secondary))",
                     contrast: "hsl(var(--secondary-contrast))",
+                    muted: "hsl(var(--secondary-muted))",
                 },
 
                 text: {

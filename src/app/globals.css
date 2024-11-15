@@ -15,9 +15,11 @@ body,
         --background: 0 0% 92%;
 
         --primary: 102 54% 18%;
-        --primary-contrast: 282 54% 95%;
+        --primary-contrast: 102 75% 30%;
+        --primary-muted: 102 25% 18%;
         --secondary: 101 31% 62%;
-        --secondary-contrast: 282 54% 95%;
+        --secondary-contrast: 101 50% 40%;
+        --secondary-muted: 101 15% 62%;
         --accent: 52 74% 60%;
 
         --shadow-color: 0 0% 82%;
@@ -30,9 +32,11 @@ body,
         --background: 0 0% 12%;
 
         --primary: 102 54% 82%;
-        --primary-contrast: 282 54% 95%;
+        --primary-contrast: 102 75% 50%;
+        --primary-muted: 102 23% 82%;
         --secondary: 101 31% 38%;
-        --secondary-contrast: 282 54% 95%;
+        --secondary-contrast: 101 50% 70%;
+        --secondary-muted: 101 14% 38%;
         --accent: 52 74% 40%;
 
         --shadow-color: 0 0% 7%;
