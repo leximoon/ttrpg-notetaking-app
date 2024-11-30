@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Logo } from "./logo";
 import { Button } from "@/components/UI/button";
 

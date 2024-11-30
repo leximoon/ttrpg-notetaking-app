@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
-const button = cva("button rounded-lg text-primary-contrast", {
+const button = cva("button rounded-lg text-primary-contrast flex items-center gap-1", {
     //Properties of the button
     
     //TODO: Add transparent with no border option
@@ -14,6 +14,7 @@ const button = cva("button rounded-lg text-primary-contrast", {
         variant: {
             fill: ["border-transparent"],
             dashed: ["text-text font-semibold border-2 border-dashed"],
+            transparent: ["border-transparent bg-transparent !p-0"]
         },
         //Define the size of the button
         size: {
@@ -63,6 +64,7 @@ interface ButtonProps
     label?: string;
     //Prop to fill the whole content where the button is placed
     fillOut?: boolean;
+    icon?: React.ReactNode;
 }
 
 const Button = ({
@@ -70,6 +72,7 @@ const Button = ({
     size,
     variant,
     className,
+    icon,
     label,
     fillOut = false,
     onClick,
@@ -86,6 +89,7 @@ const Button = ({
             })}`}
             {...props}
         >
+            {icon}
             {label}
         </button>
     );
