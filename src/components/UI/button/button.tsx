@@ -18,9 +18,9 @@ const button = cva("button rounded-lg text-primary-contrast flex items-center ga
         },
         //Define the size of the button
         size: {
-            s: ["text-sm", "py-1", "px-2"],
-            m: ["text-base", "py-2", "px-4"],
-            l: ["text-lg", "py-3", "px-6"],
+            s: ["text-sm", "py-1", "px-1"],
+            m: ["text-base", "py-2", "px-3"],
+            l: ["text-lg", "py-3", "px-5"],
         },
     },
     /**

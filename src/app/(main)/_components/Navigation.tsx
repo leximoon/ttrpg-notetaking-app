@@ -4,16 +4,18 @@ import { ChevronsLeft, MenuIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import React, { ElementRef, useRef, useState } from 'react';
 import { useMediaQuery } from 'usehooks-ts';
-import clsx from "clsx";
+import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
+
+import { UserPage } from './user-page';
 
 // ALL NAVIGATION
 export const Navigation = () => {
 	const pathname = usePathname();
-	
+
 	// WINDOW SIZE CHECK
 	const isSmall = useMediaQuery('(max-width: 768px)');
-	
+
 	// REFERENCES TO ELEMENTS
 	const isResizingRef = useRef(false);
 	const sideBarRef = useRef<ElementRef<'aside'>>(null);
@@ -37,7 +39,7 @@ export const Navigation = () => {
 	};
 
 	// When moving while clicking change size
-	const handleMouseMove = ( event:MouseEvent ) => {
+	const handleMouseMove = (event: MouseEvent) => {
 		if (!isResizingRef.current) return;
 		let newWidth = event.clientX;
 
@@ -47,17 +49,19 @@ export const Navigation = () => {
 		if (sideBarRef.current && navBarRef.current) {
 			sideBarRef.current.style.width = `${newWidth}px`;
 			navBarRef.current.style.setProperty('left', `${newWidth}px`);
-			navBarRef.current.style.setProperty('width', `calc(100% - ${newWidth}px)`)
+			navBarRef.current.style.setProperty(
+				'width',
+				`calc(100% - ${newWidth}px)`
+			);
 		}
-	}
+	};
 
 	// When click ends reset resizing to false and remove event listeners
 	const handleMouseUp = () => {
 		isResizingRef.current = false;
 		document.removeEventListener('mousemove', handleMouseMove);
 		document.removeEventListener('mouseup', handleMouseUp);
-
-	}
+	};
 
 	// RESIZE FUNCTIONS
 	// Reset side bar to original size
@@ -68,12 +72,15 @@ export const Navigation = () => {
 
 			sideBarRef.current.style.width = isSmall ? '100%' : '240px';
 			navBarRef.current.style.setProperty('left', isSmall ? '100%' : '240px');
-			navBarRef.current.style.setProperty('width', isSmall ? '0' : 'calc(100% - 240px');
-			
+			navBarRef.current.style.setProperty(
+				'width',
+				isSmall ? '0' : 'calc(100% - 240px'
+			);
+
 			//time for resetting same as duration of transition animation
 			setTimeout(() => setIsResetting(false), 300);
 		}
-	}
+	};
 
 	// Collapse side bar completely
 	const collapse = () => {
@@ -88,57 +95,66 @@ export const Navigation = () => {
 			//time for resetting same as duration of transition
 			setTimeout(() => setIsResetting(false), 300);
 		}
-	}
+	};
 
 	return (
 		<>
-		<aside
-			ref={ sideBarRef }
-			className= {twMerge(clsx(
-				// SIDE BAR
-				"group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 flex-col z-[99999]", 
-                { "transition-all ease-in-out duration-300": isResetting },
-                { "w-0": isSmall }
-			))}
-		>
-			<div
-				onClick={collapse}
-				role="button"
-				className= {twMerge(clsx(
-					// COLLAPSE BUTTON
-					"h-6 w-6 text-text rounded-sm hover:bg-secondary-contrast absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
-					{"opacity-100": isSmall}
-				))}
+			<aside
+				ref={sideBarRef}
+				className={twMerge(
+					clsx(
+						// SIDE BAR
+						'group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 flex-col z-[99999]',
+						{ 'transition-all ease-in-out duration-300': isResetting },
+						{ 'w-0': isSmall }
+					)
+				)}
 			>
-				<ChevronsLeft className="h-6 w-6" />
-			</div>
-			<div>
-				<p>Action items</p>
-			</div>
-			<div className="mt-4">
-				<p>Documents</p>
-			</div>
-			<div
-				// vVERTICAL BAR FOR RESIZING SIDE BAR
-				className="opacity-0 group-hover/sidebar:opacity-100
+				<div
+					onClick={collapse}
+					role="button"
+					className={twMerge(
+						clsx(
+							// COLLAPSE BUTTON
+							'h-6 w-6 text-text rounded-sm hover:bg-secondary-contrast absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition',
+							{ 'opacity-100': isSmall }
+						)
+					)}
+				>
+					<ChevronsLeft className="h-6 w-6" />
+				</div>
+				<div>
+					<UserPage />
+				</div>
+				<div
+					// vVERTICAL BAR FOR RESIZING SIDE BAR
+					className="opacity-0 group-hover/sidebar:opacity-100
                 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"
-				onMouseDown={handleMouseDown}
-				onClick={resetWidth}
-			/>
-		</aside>
-		<div
-			ref={ navBarRef }
-			className={twMerge(clsx(
-				// TOP NAV BAR
-				'absolute top-0 z-[99999] left-60 w-[calc(100%-240px)]',
-				{'transition-all ease-in-out duration-300': isResetting},
-				{'left-0 w-full': isSmall}
-			))}
-		>
-			<nav className='bg-transparent px-3 py-2 w-full'>
-				{ isCollapsed && <MenuIcon onClick={resetWidth} role="button" className='h-6 w-6 text-text'/>}
-			</nav>
-		</div>
+					onMouseDown={handleMouseDown}
+					onClick={resetWidth}
+				/>
+			</aside>
+			<div
+				ref={navBarRef}
+				className={twMerge(
+					clsx(
+						// TOP NAV BAR
+						'absolute top-0 z-[99999] left-60 w-[calc(100%-240px)]',
+						{ 'transition-all ease-in-out duration-300': isResetting },
+						{ 'left-0 w-full': isSmall }
+					)
+				)}
+			>
+				<nav className="bg-transparent px-3 py-2 w-full">
+					{isCollapsed && (
+						<MenuIcon
+							onClick={resetWidth}
+							role="button"
+							className="h-6 w-6 text-text"
+						/>
+					)}
+				</nav>
+			</div>
 		</>
 	);
 };
