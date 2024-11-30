@@ -1,6 +1,5 @@
 "use client";
 
-// TODO: add arrow right icon to button
 const Header = () => {
     return (
         <div className="max-w-3xl space-y-4">
