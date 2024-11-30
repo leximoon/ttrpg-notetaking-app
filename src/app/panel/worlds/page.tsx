@@ -1,5 +1,3 @@
-"use client";
-
 import { ListElement } from "../_components/listElement";
 import { Trees } from "lucide-react";
 import NewWorldModal from "../_components/newWorldModal";
