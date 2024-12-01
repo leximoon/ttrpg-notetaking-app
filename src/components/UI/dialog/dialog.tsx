@@ -22,7 +22,6 @@ const Dialog = ({ children, isOpen, onClose, title }: DialogProps) => {
 
         if (isOpen) {
             document.addEventListener("keydown", handleEscape);
-            document.body.style.overflow = "hidden";
         }
 
         return () => {

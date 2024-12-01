@@ -3,8 +3,9 @@
 import { useScrollTop } from "../../../../hooks/use-scroll-top";
 import clsx from "clsx";
 import { Logo } from "./logo";
+import { redirect, RedirectType } from "next/navigation";
 
-import AuthDialog from "./authDialog";
+import { Button } from "@/components/UI/button";
 
 export const NavBar = () => {
     const scrolled = useScrollTop();
@@ -17,7 +18,25 @@ export const NavBar = () => {
         >
             <Logo />
             <div className="justify-end w-full flex items-center gap-x-2 font-semibold">
-                <AuthDialog />
+                <Button
+                    intent={"secondary"}
+                    variant={"fill"}
+                    size={"m"}
+                    label="Sign Up"
+                    onClick={() => {
+                        redirect("/landing/register", RedirectType.push);
+                    }}
+                />
+
+                <Button
+                    intent={"primary"}
+                    variant={"fill"}
+                    size={"m"}
+                    label="Log In"
+                    onClick={() => {
+                        redirect("/landing/login", RedirectType.push);
+                    }}
+                />
             </div>
         </div>
     );
