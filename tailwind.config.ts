@@ -30,6 +30,16 @@ const config = {
                     contrast: "hsl(var(--secondary-contrast))",
                     muted: "hsl(var(--secondary-muted))",
                 },
+                error: {
+                    DEFAULT: "hsl(var(--error))",
+                    contrast: "hsl(var(--error-contrast))",
+                    muted: "hsl(var(--error-muted))",
+                },
+                accent: {
+                    DEFAULT: "hsl(var(--accent))",
+                    contrast: "hsl(var(--accent-contrast))",
+                    muted: "hsl(var(--accent-muted))",
+                },
 
                 text: {
                     DEFAULT: "hsl(var(--text))",
@@ -50,6 +60,7 @@ const config = {
             },
         },
     },
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     plugins: [require("tailwindcss-animate")],
 } satisfies Config;
 

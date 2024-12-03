@@ -21,6 +21,7 @@ body,
         --secondary-contrast: 101 50% 40%;
         --secondary-muted: 101 15% 62%;
         --accent: 52 74% 60%;
+        --error: 0 80% 50%;
 
         --shadow-color: 0 0% 82%;
         --card: 0 0% 98%;
@@ -34,14 +35,18 @@ body,
         --primary: 102 54% 82%;
         --primary-contrast: 102 75% 50%;
         --primary-muted: 102 23% 82%;
+
         --secondary: 101 31% 38%;
         --secondary-contrast: 101 50% 70%;
         --secondary-muted: 101 14% 38%;
+
         --accent: 52 74% 40%;
+
+        --error: 0 80% 50%;
 
         --shadow-color: 0 0% 7%;
         --card: 0 0% 20%;
-        --border: 216 12% 18%
+        --border: 216 12% 18%;
     }
 }
 
