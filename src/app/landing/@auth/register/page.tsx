@@ -2,11 +2,12 @@
 import React from "react";
 
 import AuthDialog from "../_components/authDialog";
+import { RegisterForm } from "../_components/registerForm";
 
 export default function LoginPage() {
     return (
-        <AuthDialog>
-            <div>RegisterPage</div>
+        <AuthDialog title="Register">
+            <RegisterForm />
         </AuthDialog>
     );
 }
