@@ -41,3 +41,19 @@ export async function registerUser(
 
     return response.json();
 }
+export async function me() {
+    const response = await fetch(`${API_BASE_URL}/user/me`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    });
+
+    if (!response.ok) {
+        throw new Error("Retrieving user failed");
+    }
+    const json = await response.json();
+
+    return json;
+}
