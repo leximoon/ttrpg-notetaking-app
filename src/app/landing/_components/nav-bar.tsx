@@ -3,12 +3,12 @@
 import { useScrollTop } from "../../../../hooks/use-scroll-top";
 import clsx from "clsx";
 import { Logo } from "./logo";
-import { redirect, RedirectType } from "next/navigation";
-
 import { Button } from "@/components/UI/button";
+import { redirect, RedirectType } from "next/navigation";
 
 export const NavBar = () => {
     const scrolled = useScrollTop();
+
     return (
         <div
             className={clsx(
@@ -24,19 +24,18 @@ export const NavBar = () => {
                     size={"m"}
                     label="Sign Up"
                     onClick={() => {
-                        redirect("/landing/register", RedirectType.push);
+                        redirect("/auth/register", RedirectType.push);
                     }}
                 />
-
                 <Button
                     intent={"primary"}
                     variant={"fill"}
                     size={"m"}
                     label="Log In"
                     onClick={() => {
-                        redirect("/landing/login", RedirectType.push);
+                        redirect("/auth/login", RedirectType.push);
                     }}
-                />
+                />{" "}
             </div>
         </div>
     );

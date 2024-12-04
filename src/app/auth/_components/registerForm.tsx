@@ -1,49 +1,47 @@
-"use client";
 import { Button } from "@/components/UI/button";
 import { FormInput } from "@/components/UI/form/formInput";
-import { loginUser } from "@/lib/api/authApi";
-import { useRouter } from "next/navigation";
-import { FormProvider, useForm } from "react-hook-form";
+import { registerUser } from "@/lib/api/authApi";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
-//TODO: Create schema files
-export const loginSchema = z.object({
+export const registerSchema = z.object({
     email: z.string().min(1, "Required").email(),
     password: z.string().min(8, "Password must be at least 8 characters"),
+    name: z.string().min(1, "Required"),
 });
 
-export type LoginInput = z.infer<typeof loginSchema>;
+export type RegisterInput = z.infer<typeof registerSchema>;
 
-//Form component
-export const LoginForm = () => {
+export const RegisterForm = () => {
     const router = useRouter();
-    const methods = useForm<LoginInput>({
-        resolver: zodResolver(loginSchema),
+    const methods = useForm<RegisterInput>({
+        resolver: zodResolver(registerSchema),
         defaultValues: {
             email: "",
             password: "",
+            name: "",
         },
     });
 
     const { handleSubmit } = methods;
 
     //Form submit handler
-    const onSubmit = async function ({ email, password }: LoginInput) {
+    const onSubmit = async function ({ email, password, name }: RegisterInput) {
         try {
-            //TODO: store user info in local storage
             //ApiCall
-            const { authToken, refreshToken } = await loginUser(
-                email,
-                password
-            );
+            const { authToken } = await registerUser(email, password, name);
 
             //Success
+            // Store the token in localStorage or a secure cookie
+            localStorage.setItem("authToken", authToken);
+
             //Redirect to the dashboard
             router.push("/panel/worlds");
-        } catch (err: any) {
-            //TODO: Handle error
-            console.log(err.message);
+        } catch (err) {
+            console.log(err);
         }
     };
 
@@ -63,6 +61,12 @@ export const LoginForm = () => {
                     placeholder="Insert your password"
                     type="password"
                     name="password"
+                    isRequired
+                />
+                <FormInput
+                    placeholder="Insert your name"
+                    type="name"
+                    name="name"
                     isRequired
                 />
 

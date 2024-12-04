@@ -11,8 +11,8 @@ const LandingPageLayout = ({
         <div className="h-full">
             <NavBar />
             <main className="h-full pt-40">
-                {children}
                 {auth}
+                {children}
             </main>
         </div>
     );

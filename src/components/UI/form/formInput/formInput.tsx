@@ -3,9 +3,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 
 //TODO: Extend from HTMLInputAttributes
-interface FormInputProps {
-    placeholder: string;
-    type: string;
+interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     isRequired: boolean;
     errorMessage?: string;
