@@ -13,7 +13,7 @@ export async function loginUser(email: string, password: string) {
 
         body: JSON.stringify({ email, password }),
     });
-
+    console.log("Login response", response);
     //TODO: handle error
     if (!response.ok) {
         throw new Error("Login failed");
