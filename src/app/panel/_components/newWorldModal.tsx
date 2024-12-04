@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/UI/button";
 import { Dialog } from "@/components/UI/dialog";
+import { me } from "@/lib/api/authApi";
 import React, { useState } from "react";
 
 export default function NewWorldModal() {
@@ -33,7 +34,12 @@ export default function NewWorldModal() {
                         You can change this later
                     </span>
                 </div>
-                <Button intent="secondary" label="Create world" fillOut />
+                <Button
+                    intent="secondary"
+                    label="Create world"
+                    fillOut
+                    onClick={() => {}}
+                />
             </Dialog>
         </>
     );

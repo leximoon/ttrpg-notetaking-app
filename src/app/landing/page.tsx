@@ -1,8 +1,14 @@
+import { getServerSession } from "next-auth";
 import { Footer } from "./_components/footer";
 import Header from "./_components/header";
 import { Main } from "./_components/main";
+import { redirect, RedirectType } from "next/navigation";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+    const session = await getServerSession();
+    if (session) {
+        redirect("/panel/worlds", RedirectType.replace);
+    }
     return (
         <>
             <div className="min-h-full flex flex-col bg-background">

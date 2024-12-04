@@ -1,6 +1,5 @@
-import { ListElement } from "../_components/listElement";
-import { Trees } from "lucide-react";
 import NewWorldModal from "../_components/newWorldModal";
+import WorldsList from "./_components/worldsList";
 
 export default function ControlPanelPage() {
     return (
@@ -10,17 +9,7 @@ export default function ControlPanelPage() {
                 <div className="flex flex-col items-center">
                     <div className="w-10/12 h-20">
                         <NewWorldModal />
-                        <ul>
-                            <ListElement
-                                name="World name"
-                                description="Description of world"
-                                icon={<Trees />}
-                            />
-                            <ListElement
-                                name="World name"
-                                description="Description of world"
-                            />
-                        </ul>
+                        <WorldsList />
                     </div>
                 </div>
             </div>
