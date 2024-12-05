@@ -2,8 +2,6 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 const button = cva("button rounded-lg text-primary-contrast flex items-center gap-1", {
     //Properties of the button
-    
-    //TODO: Add transparent with no border option
     variants: {
         //Defines the main color of the button
         intent: {
