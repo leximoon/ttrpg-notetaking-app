@@ -7,7 +7,7 @@ import { useMediaQuery } from 'usehooks-ts';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { UserPage } from './user-page';
+import { UserItem } from './userItem';
 
 // ALL NAVIGATION
 export const Navigation = () => {
@@ -124,7 +124,7 @@ export const Navigation = () => {
 					<ChevronsLeft className="h-6 w-6" />
 				</div>
 				<div>
-					<UserPage />
+					<UserItem />
 				</div>
 				<div
 					// vVERTICAL BAR FOR RESIZING SIDE BAR
