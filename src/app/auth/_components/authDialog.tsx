@@ -11,6 +11,7 @@ export default function AuthDialog({
 }) {
     const router = useRouter();
     // Navigates back when user closes the dialog
+
     const handleOpenChange = () => {
         router.back();
     };
