@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "./provider";
+import { QueryProvider, ThemeProvider } from "./provider";
 
 export const metadata: Metadata = {
 	title: 'BookWyrm',
@@ -31,7 +31,9 @@ export default function RootLayout({
     return (
         <html lang="en" className="light" suppressHydrationWarning>
             <body>
-                <ThemeProvider>{children}</ThemeProvider>
+				<QueryProvider>
+                	<ThemeProvider>{children}</ThemeProvider>
+				</QueryProvider>
             </body>
         </html>
     );
