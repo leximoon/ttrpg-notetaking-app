@@ -1,7 +1,6 @@
 'use client';
 import { Button } from "@/components/UI/button"; // Not server component
 
-// TODO: add arrow right icon to button
 const Header = () => {
     return ( 
         <div className="max-w-3xl space-y-4">
@@ -11,7 +10,6 @@ const Header = () => {
             <h3 className="text-base md:text-2xl sm:text-xl font-medium">
                 BookWyrm is the TTRPG Notetaking App that is ready to use <br/> immediatly without having to do a bunch of work before starting.
             </h3>
-            <Button className="font-bold" label="Enter BookWyrm" intent="primary" size="m"></Button>
         </div>
      );
 }
