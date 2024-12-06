@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@storybook/types": "^8.4.2",
+    "@tanstack/react-query": "^5.62.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.455.0",
@@ -32,6 +33,7 @@
     "@storybook/nextjs": "^8.4.2",
     "@storybook/react": "^8.4.2",
     "@storybook/test": "^8.4.2",
+    "@tanstack/eslint-plugin-query": "^5.62.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
