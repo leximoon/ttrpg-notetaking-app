@@ -1,0 +1,80 @@
+"use client";
+import { Button } from "@/components/UI/button";
+import { FormInput } from "@/components/UI/form/formInput";
+import { registerUser } from "@/lib/api/authApi";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
+
+export const registerSchema = z.object({
+    email: z.string().min(1, "Required").email(),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    name: z.string().min(1, "Required"),
+});
+
+export type RegisterInput = z.infer<typeof registerSchema>;
+
+export const RegisterForm = () => {
+    const methods = useForm<RegisterInput>({
+        resolver: zodResolver(registerSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+            name: "",
+        },
+    });
+
+    const { handleSubmit } = methods;
+
+    //Form submit handler
+    const onSubmit = async function ({ email, password, name }: RegisterInput) {
+        try {
+            //ApiCall
+            const response = await registerUser(email, password, name);
+
+            if (!response.ok) {
+                throw new Error("Register failed");
+            }
+
+            await signIn("credentials", {
+                username: email,
+                password: password,
+                redirect: true,
+                callbackUrl: "/panel/worlds",
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    return (
+        <FormProvider {...methods}>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col gap-3"
+            >
+                <FormInput
+                    placeholder="Insert your email"
+                    type="email"
+                    name="email"
+                    isRequired
+                />
+                <FormInput
+                    placeholder="Insert your password"
+                    type="password"
+                    name="password"
+                    isRequired
+                />
+                <FormInput
+                    placeholder="Insert your name"
+                    type="name"
+                    name="name"
+                    isRequired
+                />
+
+                <Button label="Login" className="self-center" />
+            </form>
+        </FormProvider>
+    );
+};

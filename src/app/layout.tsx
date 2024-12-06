@@ -1,26 +1,26 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { QueryProvider, ThemeProvider } from "./provider";
+import { AppProvider } from "./providers";
 
 export const metadata: Metadata = {
-	title: 'BookWyrm',
-	description:
-		'Web app for taking notes for TTRPGs with prefabricated templates',
-		
-	icons: {
-		icon: [
-			{
-				url: '/dragon-logo.svg',
-				href: '/dragon-logo.svg',
-				media: '(prefers-color-scheme: light)',
-			},
-      {
-				url: '/dragon-logo.svg',
-				href: '/dragon-logo.svg',
-				media: '(prefers-color-scheme: dark)',
-			},
-		],
-	},
+    title: "BookWyrm",
+    description:
+        "Web app for taking notes for TTRPGs with prefabricated templates",
+
+    icons: {
+        icon: [
+            {
+                url: "/dragon-logo.svg",
+                href: "/dragon-logo.svg",
+                media: "(prefers-color-scheme: light)",
+            },
+            {
+                url: "/dragon-logo.svg",
+                href: "/dragon-logo.svg",
+                media: "(prefers-color-scheme: dark)",
+            },
+        ],
+    },
 };
 
 export default function RootLayout({
@@ -31,9 +31,7 @@ export default function RootLayout({
     return (
         <html lang="en" className="light" suppressHydrationWarning>
             <body>
-				<QueryProvider>
-                	<ThemeProvider>{children}</ThemeProvider>
-				</QueryProvider>
+                <AppProvider>{children}</AppProvider>
             </body>
         </html>
     );
