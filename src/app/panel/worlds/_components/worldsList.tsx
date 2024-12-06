@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import { ListElement } from "./listElement";
 import { World } from "@/types/world";
