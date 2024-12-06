@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronsLeft, MenuIcon } from 'lucide-react';
+import { ChevronsLeft, MenuIcon, PlusCircleIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import React, { ElementRef, useRef, useState } from 'react';
 import { useMediaQuery } from 'usehooks-ts';
@@ -8,6 +8,9 @@ import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import { UserItem } from './userItem';
+import { loadDocuments } from '@/documentsApi';
+import { Item } from './item';
+import { useQuery } from '@tanstack/react-query';
 
 // ALL NAVIGATION
 export const Navigation = () => {
@@ -24,6 +27,9 @@ export const Navigation = () => {
 	// STATES FOR RESETTING AND COLLAPSING
 	const [isResetting, setIsResetting] = useState(false);
 	const [isCollapsed, setIsCollapsed] = useState(isSmall);
+
+	// LOADING DOCUMENTS
+	const documents = useQuery({queryKey: ["documents"], queryFn: loadDocuments})
 
 	// MOUSE ACTION FUNCTIONS
 	// When clicking set resizing to true and add event listeners
@@ -125,9 +131,22 @@ export const Navigation = () => {
 				</div>
 				<div>
 					<UserItem />
+					<Item 
+					onClick={() => {}} 
+					label="New Page" 
+					icon={<PlusCircleIcon/>}/>
+				</div>
+				<div>
+					{
+					documents.isLoading? <div>Is Loading</div> : 
+					documents.data?.map(({...document}) => (
+						<p key={document.id}>
+							{document.title}
+						</p>
+					))}
 				</div>
 				<div
-					// vVERTICAL BAR FOR RESIZING SIDE BAR
+					// VERTICAL BAR FOR RESIZING SIDE BAR
 					className="opacity-0 group-hover/sidebar:opacity-100
                 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"
 					onMouseDown={handleMouseDown}
