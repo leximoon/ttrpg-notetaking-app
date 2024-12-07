@@ -1,6 +1,6 @@
 "use client";
 
-import { useScrollTop } from "../../../../hooks/use-scroll-top";
+import { useScrollTop } from "../../../hooks/useScrollTop";
 import clsx from "clsx";
 import { Logo } from "./logo";
 import { Button } from "@/components/UI/button";
