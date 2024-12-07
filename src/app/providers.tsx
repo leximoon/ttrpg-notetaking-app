@@ -1,6 +1,7 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { type ThemeProviderProps } from "next-themes";
@@ -35,6 +36,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 function AppProvider({ children }: { children: React.ReactNode }) {
     return (
         <QueryProvider>
+            <ReactQueryDevtools />
             <AuthProvider>
                 <ThemeProvider>{children}</ThemeProvider>
             </AuthProvider>
