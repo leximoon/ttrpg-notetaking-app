@@ -1,11 +1,12 @@
+"use client";
 import { Button } from "@/components/UI/button";
 import { FormInput } from "@/components/UI/form/formInput";
-import { createWorld } from "@/lib/api/worldsApi";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useWorldsMutations } from "@hooks/useWorld";
+import { redirect } from "next/navigation";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
-import { redirect } from "next/navigation";
 
 export const newWorldSchema = z.object({
     name: z.string().min(1, "Required"),
@@ -15,7 +16,7 @@ export const newWorldSchema = z.object({
 
 export type NewWorldInput = z.infer<typeof newWorldSchema>;
 
-export default function NewWorldForm() {
+export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
     const methods = useForm<NewWorldInput>({
         resolver: zodResolver(newWorldSchema),
         defaultValues: {
@@ -24,6 +25,7 @@ export default function NewWorldForm() {
             isPublic: false,
         },
     });
+    const { addWorld } = useWorldsMutations();
 
     const { handleSubmit } = methods;
 
@@ -33,11 +35,16 @@ export default function NewWorldForm() {
         description,
         isPublic,
     }: NewWorldInput) {
-        console.log(name, " Creating new world");
-        const response = await createWorld({ name, description, isPublic });
-        if (response) {
-            redirect("/documents");
-        }
+        addWorld.mutate(
+            { name, description, isPublic },
+            {
+                onSuccess: ({ id }) => {
+                    console.log(`World created with id: ${id}`);
+                    redirect(`/documents/${id}`);
+                    closeForm();
+                },
+            }
+        );
     };
 
     return (

@@ -12,6 +12,7 @@ export default function NewWorldModal() {
     return (
         <>
             <Button
+                className=""
                 intent="secondary"
                 variant="dashed"
                 fillOut
@@ -23,7 +24,7 @@ export default function NewWorldModal() {
                 onClose={closeDialog}
                 title="WORLD NAME"
             >
-                <NewWorldForm />
+                <NewWorldForm closeForm={closeDialog} />
             </Dialog>
         </>
     );
