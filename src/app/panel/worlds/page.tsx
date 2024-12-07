@@ -1,4 +1,4 @@
-import NewWorldModal from "../_components/newWorldModal";
+import NewWorldModal from "./_components/newWorldModal";
 import WorldsList from "./_components/worldsList";
 
 export default function ControlPanelPage() {
