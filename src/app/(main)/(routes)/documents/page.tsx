@@ -3,16 +3,15 @@
 import Image from "next/image";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/UI/button";
-import { createDocument } from "@/documentsApi";
+import { createDocument, loadDocuments } from "@/lib/api/documentsApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDocument } from "../../../../hooks/useDocument";
 
 const DocumentPage = () => {
-
-    const onCreate = () => {
-        const promise = createDocument("Untitled");  
-    
-        // TODO: add loading and error and created with toast
+    const {execute} = useDocument({mutationFn: createDocument});
+    const handleDocument = () => {
+        execute("ffff")
     }
-    
     return ( 
         <div className="h-full flex flex-col items-center justify-center space-y-4">
             
@@ -31,7 +30,7 @@ const DocumentPage = () => {
             variant="fill" 
             icon={ <PlusIcon />} 
             label="New Page" 
-            onClick= { onCreate }
+            onClick= { handleDocument }
             />
         </div>
      );

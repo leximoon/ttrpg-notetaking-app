@@ -8,9 +8,9 @@ import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import { UserItem } from './userItem';
-import { loadDocuments } from '@/documentsApi';
+import { loadDocuments } from '@/lib/api/documentsApi';
 import { Item } from './item';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // ALL NAVIGATION
 export const Navigation = () => {
