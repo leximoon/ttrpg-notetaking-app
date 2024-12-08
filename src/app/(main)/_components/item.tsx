@@ -7,21 +7,22 @@ interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
     fillOut?: boolean;
     label?: string;
     className?: string;
-    icon?: React.ReactNode
+    icon?: React.ReactNode;
+    fn: () => void;
 }
 
 export const Item = ({
     className,
     icon,
     label,
-    fillOut = false,
-    onClick,
+    fn,
     ...props
 }: ItemProps) => {
     return(
-        <div>
-            item
-        </div>
-        //<Button onClick={onClick} label={label} variant="transparent" intent="sidebaritem" icon=
+        <>
+            <div>
+                <Button onClick={fn} className={className} label={label} variant="fill" intent="primary" icon={icon} />
+            </div>
+        </>
     )
 }
