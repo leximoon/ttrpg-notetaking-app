@@ -6,12 +6,14 @@ import { World } from "@/types/world";
 import { Map } from "lucide-react";
 import { getSessionWorlds } from "@/lib/api/worldsApi";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export default function WorldsList() {
     const { data, isLoading, error } = useQuery<World[]>({
         queryKey: ["worlds"],
         queryFn: getSessionWorlds,
     });
+    const router = useRouter();
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -26,6 +28,7 @@ export default function WorldsList() {
             name={name}
             description={description}
             icon={<Map />}
+            onClick={() => router.push(`/${id}/`)}
         />
     ));
 }
