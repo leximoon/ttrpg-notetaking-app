@@ -18,13 +18,14 @@ export async function createDocument(title: string) {
     return json;
 }
 
-export async function loadDocuments() {
+export async function loadAllDocuments(worldId: string) {
     const response = await fetch(`${API_BASE_URL}/documents/load`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
         credentials: "include",
+        body: JSON.stringify({ worldId }),
     });
 
     if (!response.ok) {

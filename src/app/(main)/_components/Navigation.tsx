@@ -8,9 +8,10 @@ import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import { UserItem } from './userItem';
-import { loadDocuments } from '@/lib/api/documentsApi';
+import { createDocument, loadAllDocuments } from '@/lib/api/documentsApi';
 import { Item } from './item';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import { useDocument } from '@/hooks/useDocument';
 
 // ALL NAVIGATION
 export const Navigation = () => {
@@ -29,7 +30,14 @@ export const Navigation = () => {
 	const [isCollapsed, setIsCollapsed] = useState(isSmall);
 
 	// LOADING DOCUMENTS
-	const documents = useQuery({queryKey: ["documents"], queryFn: loadDocuments})
+	const worldId = pathname.split("/")[1] //get first element from url which is worldId
+	const documents = useQuery({queryKey: ["documents"], queryFn: ()=>loadAllDocuments(worldId)})
+
+	// CREATING DOCUMENT
+	const {execute} = useDocument({mutationFn: createDocument});
+    const handleDocument = () => {
+        execute("Untitled")
+    }
 
 	// MOUSE ACTION FUNCTIONS
 	// When clicking set resizing to true and add event listeners
@@ -129,12 +137,14 @@ export const Navigation = () => {
 				>
 					<ChevronsLeft className="h-6 w-6" />
 				</div>
-				<div>
+				<div className='h-13'>
 					<UserItem />
 					<Item 
-					onClick={() => {}} 
+					fn={handleDocument}
+					className='w-full h-full'
 					label="New Page" 
 					icon={<PlusCircleIcon/>}/>
+					
 				</div>
 				<div>
 					{
