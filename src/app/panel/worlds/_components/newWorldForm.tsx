@@ -2,7 +2,7 @@
 import { Button } from "@/components/UI/button";
 import { FormInput } from "@/components/UI/form/formInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useWorldsMutations } from "@hooks/useWorld";
+import { useWorlds } from "@hooks/useWorld";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -25,7 +25,7 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
             isPublic: false,
         },
     });
-    const { addWorld } = useWorldsMutations();
+    const { addWorld } = useWorlds();
     const router = useRouter();
 
     const { handleSubmit } = methods;

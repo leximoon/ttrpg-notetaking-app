@@ -35,3 +35,18 @@ export async function createWorld({ ...world }: NewWorldInput) {
 
     return json;
 }
+
+export async function getWorldById(worldId: string) {
+    const response = await fetch(`${API_BASE_URL}/world/${worldId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    });
+    if (!response.ok) {
+        throw new Error("Retrieving world failed");
+    }
+    const json = await response.json();
+    return json;
+}

@@ -1,13 +1,11 @@
 import { Map } from "lucide-react";
 interface ListElementProps extends React.HTMLAttributes<HTMLLIElement> {
-    id: string;
     name: string;
     description: string;
     icon?: JSX.Element;
 }
 
 const ListElement = ({
-    id,
     name,
     description,
     icon = <Map />,
@@ -16,7 +14,6 @@ const ListElement = ({
     return (
         <>
             <li
-                key={id}
                 className="flex items-center border py-2 mb-3 cursor-pointer hover:bg-secondary/15"
                 onClick={onClick}
             >
