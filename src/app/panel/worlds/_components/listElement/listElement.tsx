@@ -11,12 +11,14 @@ const ListElement = ({
     name,
     description,
     icon = <Map />,
+    onClick,
 }: ListElementProps) => {
     return (
         <>
             <li
                 key={id}
                 className="flex items-center border py-2 mb-3 cursor-pointer hover:bg-secondary/15"
+                onClick={onClick}
             >
                 <div className="mx-4 text-text">{icon}</div>
                 <div className="flex flex-col font-semibold">
