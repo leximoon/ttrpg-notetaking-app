@@ -3,14 +3,14 @@
 import Image from "next/image";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/UI/button";
-import { createDocument, loadDocuments } from "@/lib/api/documentsApi";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createDocument } from "@/lib/api/documentsApi";
 import { useDocument } from "../../../../hooks/useDocument";
 
 const DocumentPage = () => {
     const {execute} = useDocument({mutationFn: createDocument});
     const handleDocument = () => {
-        execute("ffff")
+        // TODO: add title input
+        execute("Untitled")
     }
     return ( 
         <div className="h-full flex flex-col items-center justify-center space-y-4">
