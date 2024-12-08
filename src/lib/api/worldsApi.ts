@@ -15,7 +15,7 @@ export async function getSessionWorlds() {
         throw new Error("Retrieving user failed");
     }
     const json = await response.json();
-    console.log(json);
+
     return json;
 }
 export async function createWorld({ ...world }: NewWorldInput) {
@@ -32,7 +32,6 @@ export async function createWorld({ ...world }: NewWorldInput) {
         throw new Error("Creating world failed");
     }
     const json = await response.json();
-    console.log(json);
 
     return json;
 }

@@ -3,7 +3,7 @@ import { Button } from "@/components/UI/button";
 import { FormInput } from "@/components/UI/form/formInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWorldsMutations } from "@hooks/useWorld";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,6 +26,7 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
         },
     });
     const { addWorld } = useWorldsMutations();
+    const router = useRouter();
 
     const { handleSubmit } = methods;
 
@@ -40,8 +41,8 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
             {
                 onSuccess: ({ id }) => {
                     console.log(`World created with id: ${id}`);
-                    redirect(`/documents/${id}`);
                     closeForm();
+                    router.push(`/documents/${id}`);
                 },
             }
         );
