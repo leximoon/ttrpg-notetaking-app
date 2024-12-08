@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/UI/button";
 import { FormInput } from "@/components/UI/form/formInput";
+import { FormTextArea } from "@/components/UI/form/formTextArea/formTextArea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWorlds } from "@hooks/useWorld";
 import { useRouter } from "next/navigation";
@@ -42,7 +43,7 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
                 onSuccess: ({ id }) => {
                     console.log(`World created with id: ${id}`);
                     closeForm();
-                    router.push(`/documents/${id}`);
+                    router.push(`/${id}`);
                 },
             }
         );
@@ -56,6 +57,11 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
                     type="text"
                     name="name"
                     isRequired
+                />
+                <FormTextArea
+                    className="mb-2 w-96 h-32"
+                    placeholder="Enter world description"
+                    name="description"
                 />
 
                 <div className="pb-3">

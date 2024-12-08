@@ -3,9 +3,9 @@ import { World } from "@/types/world";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
-export function useWorlds(worldId: string) {
+export function useWorlds(worldId?: string) {
     const queryClient = useQueryClient();
-    const [currentWorldId, setCurrentWorld] = useState<string>(worldId);
+    const [currentWorldId, setCurrentWorld] = useState<string>(worldId ?? "");
 
     const addWorld = useMutation({
         mutationFn: createWorld,

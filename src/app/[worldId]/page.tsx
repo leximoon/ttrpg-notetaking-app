@@ -2,7 +2,13 @@
 import { useWorlds } from "@hooks/useWorld";
 import React from "react";
 
-export default function WorldPage({ params }) {
+interface WorldPageProps {
+    params: {
+        worldId: string;
+    };
+}
+
+export default function WorldPage({ params }: WorldPageProps) {
     const { useCurrentWorld } = useWorlds(params.worldId);
 
     const { data } = useCurrentWorld();
