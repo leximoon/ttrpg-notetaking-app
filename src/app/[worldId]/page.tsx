@@ -7,7 +7,7 @@ import { createDocument } from "@/lib/api/documentsApi";
 import { useDocument } from "@/hooks/useDocument";
 
 const DocumentPage = () => {
-    const {execute} = useDocument({mutationFn: createDocument});
+    const {execute} = useDocument({mutationFn: createDocument});//TODO: Fix hook for more than 1 parameter
     const handleDocument = () => {
         // TODO: add title input
         execute("Untitled")

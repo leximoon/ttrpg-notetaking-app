@@ -31,10 +31,10 @@ export const Navigation = () => {
 
 	// LOADING DOCUMENTS
 	const worldId = pathname.split("/")[1] //get first element from url which is worldId
-	const documents = useQuery({queryKey: ["documents"], queryFn: ()=>loadAllDocuments(worldId)})
+	const documents = useQuery({queryKey: ["documents"], queryFn: ()=>loadAllDocuments(worldId)}) //TODO: NOT WORKING
 
 	// CREATING DOCUMENT
-	const {execute} = useDocument({mutationFn: createDocument});
+	const {execute} = useDocument({mutationFn: createDocument}); //TODO: Fix hook for more than 1 parameter
     const handleDocument = () => {
         execute("Untitled")
     }
