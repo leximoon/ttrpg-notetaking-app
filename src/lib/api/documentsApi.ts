@@ -1,13 +1,13 @@
 const API_BASE_URL = "http://localhost:5000";
 
-export async function createDocument(title: string) {
+export async function createDocument(title: string, worldId: string) {
     const response = await fetch(`${API_BASE_URL}/documents/add`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ title }),
+        body: JSON.stringify({ title, worldId }),
     });
 
     if (!response.ok) {
