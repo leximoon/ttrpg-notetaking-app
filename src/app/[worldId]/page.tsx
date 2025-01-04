@@ -1,24 +1,39 @@
 "use client";
-import { useWorlds } from "@hooks/useWorld";
-import React from "react";
 
-interface WorldPageProps {
-    params: Promise <{
-        worldId: string;
-    }>;
-}
+import Image from "next/image";
+import { PlusIcon } from "lucide-react";
+import { Button } from "@/components/UI/button";
+import { createDocument } from "@/lib/api/documentsApi";
+import { useDocument } from "@/hooks/useDocument";
 
-export default function WorldPage({ params }: WorldPageProps) {
-    const solvedParams = React.use(params);
-    const { useCurrentWorld } = useWorlds(solvedParams.worldId);
-
-    const { data } = useCurrentWorld();
-
-    return (
+const DocumentPage = () => {
+    const {execute} = useDocument({mutationFn: createDocument});
+    const handleDocument = () => {
+        // TODO: add title input
+        execute("Untitled")
+    }
+    return ( 
         <div className="h-full flex flex-col items-center justify-center space-y-4">
-            <h3>Welcome to the world:</h3>
-            <h1 className="text-primary text-6xl">{data?.name}</h1>
-            <p className="border p-5 rounded-lg">{data?.description}</p>
+            
+            {/* IMAGE FOR EMPTY PAGE */}
+            <Image
+                src="../dragons.svg"
+                height="300"
+                width="300"
+                alt="Empty"
+            />
+            
+            {/* ADD PAGE BUTTON*/}
+            <Button 
+            intent="secondary" 
+            size="m" 
+            variant="fill" 
+            icon={ <PlusIcon />} 
+            label="New Page" 
+            onClick= { handleDocument }
+            />
         </div>
-    );
+     );
 }
+ 
+export default DocumentPage;
