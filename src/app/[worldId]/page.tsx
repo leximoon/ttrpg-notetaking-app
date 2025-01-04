@@ -3,13 +3,14 @@ import { useWorlds } from "@hooks/useWorld";
 import React from "react";
 
 interface WorldPageProps {
-    params: {
+    params: Promise <{
         worldId: string;
-    };
+    }>;
 }
 
 export default function WorldPage({ params }: WorldPageProps) {
-    const { useCurrentWorld } = useWorlds(params.worldId);
+    const solvedParams = React.use(params);
+    const { useCurrentWorld } = useWorlds(solvedParams.worldId);
 
     const { data } = useCurrentWorld();
 
