@@ -1,15 +1,38 @@
-import { MutationFunction, useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
+import { createDocument, getDocumentById } from "@/lib/api/documentsApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Document } from "@/types/document";
+import { useState } from "react";
 
-interface UseDocumentProps<T, Y>{
-    mutationFn: MutationFunction<T, Y>;
-}
-export function useDocument<T, Y>({mutationFn}: UseDocumentProps<T, Y>) {
+export function useDocument(documentId?: string) {
     const queryClient = useQueryClient();
-    const documentMutation: UseMutationResult<T, unknown, Y> = useMutation({mutationFn, onSuccess:() => {
-        queryClient.invalidateQueries({queryKey:["documents"]})
-    }})
-    const execute = (arg: Y) => {
-        documentMutation.mutate(arg)  
-    }
-    return {execute}
+    const [currentDocumentId, setCurrentDocumentId] = useState<string>(
+        documentId ?? ""
+    );
+
+    const addDocument = useMutation({
+        mutationFn: async ({
+            title,
+            worldId,
+        }: {
+            title: string;
+            worldId: string;
+        }) => {
+            return createDocument(title, worldId);
+        },
+        onSuccess: ({ id }) => {
+            setCurrentDocumentId(id);
+            queryClient.invalidateQueries({ queryKey: ["documents"] });
+        },
+    });
+
+    const useCurrentDocument = () =>
+        useQuery<Document | null, Error>({
+            queryKey: ["documents", currentDocumentId],
+            queryFn: () => getDocumentById(currentDocumentId),
+        });
+
+    return {
+        addDocument,
+        useCurrentDocument,
+    };
 }
