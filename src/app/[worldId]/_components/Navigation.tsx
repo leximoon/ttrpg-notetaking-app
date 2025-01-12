@@ -1,18 +1,17 @@
 "use client";
 
-import { ChevronsLeft, MenuIcon, PlusCircleIcon } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusCircle, PlusCircleIcon, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import React, { ElementRef, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import { useDocument }  from "@/hooks/useDocument";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 
 import { UserItem } from "./userItem";
-import { createDocument, loadAllDocuments } from "@/lib/api/documentsApi";
+import { loadAllDocuments } from "@/lib/api/documentsApi";
 import { Item } from "./item";
 import { useQuery } from "@tanstack/react-query";
-import {useDocument}  from "@/hooks/useDocument";
-import { string } from "zod";
 
 // ALL NAVIGATION
 export const Navigation = () => {
@@ -41,7 +40,7 @@ export const Navigation = () => {
     const { addDocument } = useDocument();
     const handleDocument = () => {
         addDocument.mutate(
-            {title:"ninini", worldId}
+            {title:"Untitled", worldId}
         );
     };
 
@@ -152,10 +151,15 @@ export const Navigation = () => {
                 <div className="h-13">
                     <UserItem />
                     <Item
-                        fn={handleDocument}
-                        className="w-full h-full"
+                    label="Search"
+                    icon={Search}
+                    isSearch
+                    onClick={()=>{}}
+                    />
+                    <Item
+                        onClick={handleDocument}
                         label="New Page"
-                        icon={<PlusCircleIcon />}
+                        icon={PlusCircle}
                     />
                 </div>
                 <div>
