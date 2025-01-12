@@ -1,17 +1,20 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/UI/button";
-import { createDocument } from "@/lib/api/documentsApi";
 import { useDocument } from "@/hooks/useDocument";
 
 const DocumentPage = () => {
-    const {execute} = useDocument({mutationFn: createDocument});//TODO: Fix hook for more than 1 parameter
-    const handleDocument = () => {
-        // TODO: add title input
-        execute("Untitled")
-    }
+    
+    const worldId = usePathname().split("/")[1];
+    const { addDocument } = useDocument();
+        const handleDocument = () => {
+            addDocument.mutate(
+                {title:"", worldId}
+            );
+        };
     return ( 
         <div className="h-full flex flex-col items-center justify-center space-y-4">
             
