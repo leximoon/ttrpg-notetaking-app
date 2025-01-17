@@ -1,12 +1,16 @@
 "use client";
-
+import { Spinner } from "@/components/UI/spinner";
 import { useSession } from "next-auth/react";
 
 const AccountPage = () => {
-    const { data: session } = useSession();
-    console.log(JSON.stringify(session));
+    const { data: session, status } = useSession();
 
-    return <div>Account Page of {session?.user?.name}</div>;
+    if (status === "authenticated") {
+        console.log("this is the session", session.user.name);
+        return <div>Page of {session.user.name}</div>;
+    } else if (status === "loading") {
+        return <Spinner />;
+    }
 };
 
 export default AccountPage;
