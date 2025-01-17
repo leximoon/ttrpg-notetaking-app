@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/UI/button";
 import { FormInput } from "@/components/UI/form/formInput";
 import { registerUser } from "@/lib/api/authApi";
@@ -70,7 +71,7 @@ export const RegisterForm = () => {
                     isRequired
                 />
 
-                <Button label="Login" className="self-center" />
+                <Button label="Register" className="self-center" />
             </form>
         </FormProvider>
     );
