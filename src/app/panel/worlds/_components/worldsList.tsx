@@ -12,6 +12,7 @@ export default async function WorldsList() {
         }
         return worldList.map((world) => (
             <ListElement
+                key={world.name}
                 name={world.name}
                 description={world.description}
                 icon={<Map />}
