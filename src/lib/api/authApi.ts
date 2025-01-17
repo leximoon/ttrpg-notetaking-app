@@ -33,7 +33,7 @@ export async function registerUser(
         throw new Error("Register failed");
     }
 
-    return response.json();
+    return response;
 }
 export async function me() {
     const response = await fetch(

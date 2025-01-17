@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/components/UI/button";
 import { Dialog } from "@/components/UI/dialog";
-import { me } from "@/lib/api/authApi";
 import React, { useState } from "react";
+import NewWorldForm from "./newWorldForm";
 
 export default function NewWorldModal() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -12,6 +12,7 @@ export default function NewWorldModal() {
     return (
         <>
             <Button
+                className=""
                 intent="secondary"
                 variant="dashed"
                 fillOut
@@ -23,23 +24,7 @@ export default function NewWorldModal() {
                 onClose={closeDialog}
                 title="WORLD NAME"
             >
-                <input
-                    className="w-full p-2 rounded-lg mb-2"
-                    type="text"
-                    placeholder="Enter world name"
-                ></input>
-                <div className="pb-3">
-                    {" "}
-                    <span className=" text-sm text-text/50">
-                        You can change this later
-                    </span>
-                </div>
-                <Button
-                    intent="secondary"
-                    label="Create world"
-                    fillOut
-                    onClick={() => {}}
-                />
+                <NewWorldForm closeForm={closeDialog} />
             </Dialog>
         </>
     );

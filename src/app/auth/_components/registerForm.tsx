@@ -3,8 +3,7 @@ import { Button } from "@/components/UI/button";
 import { FormInput } from "@/components/UI/form/formInput";
 import { registerUser } from "@/lib/api/authApi";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { signIn } from "next-auth/react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -17,7 +16,6 @@ export const registerSchema = z.object({
 export type RegisterInput = z.infer<typeof registerSchema>;
 
 export const RegisterForm = () => {
-    const router = useRouter();
     const methods = useForm<RegisterInput>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -33,14 +31,18 @@ export const RegisterForm = () => {
     const onSubmit = async function ({ email, password, name }: RegisterInput) {
         try {
             //ApiCall
-            const { authToken } = await registerUser(email, password, name);
+            const response = await registerUser(email, password, name);
 
-            //Success
-            // Store the token in localStorage or a secure cookie
-            localStorage.setItem("authToken", authToken);
+            if (!response.ok) {
+                throw new Error("Register failed");
+            }
 
-            //Redirect to the dashboard
-            router.push("/panel/worlds");
+            await signIn("credentials", {
+                username: email,
+                password: password,
+                redirect: true,
+                callbackUrl: "/panel/worlds",
+            });
         } catch (err) {
             console.log(err);
         }
