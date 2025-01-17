@@ -1,78 +1,70 @@
 import { loginUser } from "@/lib/api/authApi";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { NextApiRequest, NextApiResponse } from "next/types";
-import { cookies } from "next/headers";
 
-import { parse } from "cookie";
+export const authOptions: NextAuthOptions = {
+    providers: [
+        CredentialsProvider({
+            name: "Credentials",
 
-type NextAuthOptionsCallback = (
-    req: NextApiRequest,
-    res: NextApiResponse
-) => NextAuthOptions;
+            credentials: {
+                username: { label: "Email", type: "text" },
+                password: { label: "Password", type: "password" },
+            },
+            async authorize(credentials) {
+                //credentials passed when login, username is just the var name, but can be the email.
+                const { username, password } = credentials as {
+                    username: string;
+                    password: string;
+                };
+                if (!credentials) return null;
+                //ApiCall to
+                const res = await loginUser(username, password);
 
-const nextAuthOptions: NextAuthOptionsCallback = (req, res) => {
-    return {
-        providers: [
-            CredentialsProvider({
-                credentials: {
-                    username: { label: "Email", type: "email" },
-                    password: { label: "Password", type: "password" },
-                },
-                async authorize(credentials, req) {
-                    try {
-                        //TODO: store user info in local storage
-                        //ApiCall
+                const user = await res.json();
 
-                        if (!credentials) {
-                            throw new Error("Credentials not provided");
-                        }
+                if (user) {
+                    // Any object returned will be saved in `user` property of the JWT
+                    return user;
+                } else {
+                    // If you return null then an error will be displayed advising the user to check their details.
+                    return null;
 
-                        const response = await loginUser(
-                            credentials?.username,
-                            credentials?.password
-                        );
-                        const resolvedCookies = await cookies();
-                        const apiCookies = response.headers.getSetCookie();
-                        if (apiCookies && apiCookies.length > 0) {
-                            apiCookies.forEach((cookie) => {
-                                const parsedCookie = parse(cookie);
-                                const [cookieName, cookieValue] =
-                                    Object.entries(parsedCookie)[0];
-                                console.log(cookieName, cookieValue);
-
-                                if (cookieValue !== undefined) {
-                                    resolvedCookies.set(
-                                        cookieName,
-                                        cookieValue,
-                                        {
-                                            httpOnly: true,
-                                            path: parsedCookie.path,
-                                            secure: true,
-                                            sameSite: "strict",
-                                        }
-                                    );
-                                }
-                            });
-                        }
-
-                        return response.json();
-                    } catch (err) {
-                        //TODO: Handle error
-
-                        console.error(err);
-                        return null;
-                    }
-                },
-            }),
-        ],
-        pages: {
-            signIn: "/auth/login",
+                    // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+                }
+            },
+        }),
+    ],
+    callbacks: {
+        //Function called then nextAuth generate jwt. This will be called in logIn and when the session is checked
+        async jwt({ token, user }) {
+            //Check if the jwt callback is called in the login (user included) or not.
+            if (user) return { ...token, ...user };
+            return token;
         },
-    };
+
+        //Function called when the session is checked
+        async session({ token, session }) {
+            session.user = token.user;
+            return session;
+        },
+    },
+    pages: {
+        signIn: "/auth/login",
+    },
 };
-export const handler = (req: NextApiRequest, res: NextApiResponse) => {
-    return NextAuth(req, res, nextAuthOptions(req, res));
+
+export const authServerOptions: NextAuthOptions = {
+    ...authOptions,
+    callbacks: {
+        ...authOptions.callbacks,
+        async session({ token, session }) {
+            session.backendTokens = token.backendTokens;
+            return session;
+        },
+    },
 };
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
