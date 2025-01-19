@@ -1,4 +1,4 @@
-import { createDocument, getDocumentById } from "@/lib/api/documentsApi";
+import { createDocument, deleteDocument, getDocumentById, updateDocument } from "@/lib/api/documentsApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Document } from "@/types/document";
 import { useState } from "react";
@@ -27,6 +27,36 @@ export function useDocument(documentId?: string) {
         },
     });
 
+    const editDocument = useMutation({
+        mutationFn: async ({
+            documentId,
+            field,
+            content,
+        }: {
+            documentId: string;
+            field: string;
+            content: any;
+        }) => {
+            return updateDocument(documentId, field, content);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["documents"] });
+        }
+    });
+
+    const delDocument = useMutation({
+        mutationFn: async ({
+            documentId
+        }: {
+            documentId: string;
+        }) => {
+            return deleteDocument(documentId);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["documents"] });
+        }
+    });
+
     const useCurrentDocument = () =>
         useQuery<Document | null, Error>({
             queryKey: ["documents", currentDocumentId],
@@ -35,6 +65,8 @@ export function useDocument(documentId?: string) {
 
     return {
         addDocument,
+        editDocument,
+        delDocument,
         useCurrentDocument,
     };
 }

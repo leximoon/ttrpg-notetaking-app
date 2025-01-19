@@ -22,6 +22,46 @@ export async function createDocument(
     return json;
 }
 
+export async function updateDocument(
+    documentId: string,
+    field: string,
+    content: any
+) {
+    const response = await fetch(`${API_BASE_URL}/documents/update`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ documentId, field, content }),
+    });
+
+    if (!response.ok) {
+        throw new Error("Editing document failed");
+    }
+    const json = await response.json();
+
+    return json;
+}
+
+export async function deleteDocument(documentId: string) {
+    const response = await fetch(`${API_BASE_URL}/documents/delete`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ documentId }),
+    });
+
+    if (!response.ok) {
+        throw new Error("Deleting document failed");
+    }
+    const json = await response.json();
+
+    return json;
+}
+
 export async function loadAllDocuments(
     worldId: string,
     parentDocumentId?: string
