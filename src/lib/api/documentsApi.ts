@@ -1,13 +1,17 @@
 const API_BASE_URL = "http://localhost:5000";
 
-export async function createDocument(title: string, worldId: string) {
+export async function createDocument(
+    title: string,
+    worldId: string,
+    parentDocumentId?: string
+) {
     const response = await fetch(`${API_BASE_URL}/documents/add`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ title, worldId }),
+        body: JSON.stringify({ title, worldId, parentDocumentId }),
     });
 
     if (!response.ok) {
@@ -18,8 +22,18 @@ export async function createDocument(title: string, worldId: string) {
     return json;
 }
 
-export async function loadAllDocuments(worldId: string) {
-    const response = await fetch(`${API_BASE_URL}/documents/${worldId}`, {
+export async function loadAllDocuments(
+    worldId: string,
+    parentDocumentId?: string
+) {
+    let urlParams: string = worldId;
+
+    // Optional argument of parentDocumentId gets only Documents with that documentId as there parentDocumentId
+    if (parentDocumentId) {
+        urlParams += "?parentDocumentId=" + parentDocumentId;
+    }
+
+    const response = await fetch(`${API_BASE_URL}/documents/${urlParams}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -32,7 +46,6 @@ export async function loadAllDocuments(worldId: string) {
     }
 
     const json = await response.json();
-    console.log("Documents retrieved: ", json);
     return json;
 }
 

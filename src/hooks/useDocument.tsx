@@ -13,11 +13,13 @@ export function useDocument(documentId?: string) {
         mutationFn: async ({
             title,
             worldId,
+            parentDocumentId,
         }: {
             title: string;
             worldId: string;
+            parentDocumentId?: string;
         }) => {
-            return createDocument(title, worldId);
+            return createDocument(title, worldId, parentDocumentId);
         },
         onSuccess: ({ id }) => {
             setCurrentDocumentId(id);
