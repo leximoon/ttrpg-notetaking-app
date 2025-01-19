@@ -12,6 +12,7 @@ import { UserItem } from "./userItem";
 import { loadAllDocuments } from "@/lib/api/documentsApi";
 import { Item } from "./item";
 import { useQuery } from "@tanstack/react-query";
+import { DocumentList } from "./documentList";
 
 // ALL NAVIGATION
 export const Navigation = () => {
@@ -31,10 +32,6 @@ export const Navigation = () => {
 
     // LOADING DOCUMENTS
     const worldId = pathname.split("/")[1]; //get first element from url which is worldId
-	const documents = useQuery({
-        queryKey: ["documents"],
-        queryFn: () => loadAllDocuments(worldId),
-    });
 
     // CREATING DOCUMENT
     const { addDocument } = useDocument();
@@ -162,15 +159,8 @@ export const Navigation = () => {
                         icon={PlusCircle}
                     />
                 </div>
-                <div>
-                    {documents.isLoading ? (
-                        <div>Is Loading</div>
-                    ) : (
-                        documents.data?.map(({ ...document }) => (
-                            <p key={document.id}>{document.title}</p>
-                        ))
-                    )}
-                </div>
+                    <DocumentList // DOCUMENT LIST
+                    worldId={worldId} />
                 <div
                     // VERTICAL BAR FOR RESIZING SIDE BAR
                     className="opacity-0 group-hover/sidebar:opacity-100
