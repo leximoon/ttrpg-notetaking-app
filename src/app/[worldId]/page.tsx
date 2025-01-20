@@ -12,7 +12,7 @@ const DocumentPage = () => {
     const { addDocument } = useDocument();
         const handleDocument = () => {
             addDocument.mutate(
-                {title:"", worldId}
+                {title:"Untitled", worldId}
             );
         };
     return ( 
