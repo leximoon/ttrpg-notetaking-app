@@ -62,7 +62,7 @@ export async function deleteDocument(documentId: string) {
     return json;
 }
 
-export async function loadAllDocuments(
+export async function loadDocuments(
     worldId: string,
     parentDocumentId?: string
 ) {

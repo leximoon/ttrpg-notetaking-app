@@ -2,7 +2,7 @@ import {
     createDocument,
     deleteDocument,
     getDocumentById,
-    loadAllDocuments,
+    loadDocuments,
     updateDocument,
 } from "@/lib/api/documentsApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -31,7 +31,6 @@ export function useDocument({
             return createDocument(title, worldId, parentDocumentId);
         },
         onSuccess: ({ id, parentDocumentId }) => {
-            console.log("added document in parent ", parentDocumentId);
             setCurrentDocumentId(id);
 
             queryClient.invalidateQueries({
@@ -45,7 +44,7 @@ export function useDocument({
             documentId,
             field,
             content,
-            parentDocumentId
+            parentDocumentId,
         }: {
             documentId: string;
             field: string;
@@ -54,18 +53,28 @@ export function useDocument({
         }) => {
             return updateDocument(documentId, field, content);
         },
-        onSuccess: ({parentDocumentId}) => {
-            queryClient.invalidateQueries({ queryKey: ["documents", parentDocumentId ?? "-1"] });
+        onSuccess: ({ parentDocumentId }) => {
+            queryClient.invalidateQueries({
+                queryKey: ["documents", parentDocumentId ?? "-1"],
+            });
         },
     });
 
     const delDocument = useMutation({
-        mutationFn: async ({ documentId, parentDocumentId }: { documentId: string; parentDocumentId?: string }) => {
+        mutationFn: async ({
+            documentId,
+            parentDocumentId,
+        }: {
+            documentId: string;
+            parentDocumentId?: string;
+        }) => {
             return deleteDocument(documentId);
         },
-        onSuccess: (parentDocumentId) => {
-            queryClient.invalidateQueries({ queryKey: ["documents", parentDocumentId ?? "-1"] });
-        }
+        onSuccess: ({parentDocumentId}) => {
+            queryClient.invalidateQueries({
+                queryKey: ["documents", parentDocumentId ?? "-1"],
+            });
+        },
     });
 
     const useCurrentDocument = () =>
