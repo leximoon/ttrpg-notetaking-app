@@ -1,9 +1,18 @@
-import { createDocument, deleteDocument, getDocumentById, updateDocument } from "@/lib/api/documentsApi";
+import {
+    createDocument,
+    deleteDocument,
+    getDocumentById,
+    loadAllDocuments,
+    updateDocument,
+} from "@/lib/api/documentsApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Document } from "@/types/document";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-export function useDocument(documentId?: string) {
+export function useDocument({
+    worldId,
+    documentId,
+}: { worldId?: string; documentId?: string } = {}) {
     const queryClient = useQueryClient();
     const [currentDocumentId, setCurrentDocumentId] = useState<string>(
         documentId ?? ""
@@ -21,9 +30,13 @@ export function useDocument(documentId?: string) {
         }) => {
             return createDocument(title, worldId, parentDocumentId);
         },
-        onSuccess: ({ id }) => {
+        onSuccess: ({ id, parentDocumentId }) => {
+            console.log("added document in parent ", parentDocumentId);
             setCurrentDocumentId(id);
-            queryClient.invalidateQueries({ queryKey: ["documents"] });
+
+            queryClient.invalidateQueries({
+                queryKey: ["documents", parentDocumentId ?? "-1"],
+            });
         },
     });
 
@@ -32,34 +45,32 @@ export function useDocument(documentId?: string) {
             documentId,
             field,
             content,
+            parentDocumentId
         }: {
             documentId: string;
             field: string;
             content: any;
+            parentDocumentId?: string;
         }) => {
             return updateDocument(documentId, field, content);
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["documents"] });
-        }
+        onSuccess: ({parentDocumentId}) => {
+            queryClient.invalidateQueries({ queryKey: ["documents", parentDocumentId ?? "-1"] });
+        },
     });
 
     const delDocument = useMutation({
-        mutationFn: async ({
-            documentId
-        }: {
-            documentId: string;
-        }) => {
+        mutationFn: async ({ documentId, parentDocumentId }: { documentId: string; parentDocumentId?: string }) => {
             return deleteDocument(documentId);
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["documents"] });
+        onSuccess: (parentDocumentId) => {
+            queryClient.invalidateQueries({ queryKey: ["documents", parentDocumentId ?? "-1"] });
         }
     });
 
     const useCurrentDocument = () =>
         useQuery<Document | null, Error>({
-            queryKey: ["documents", currentDocumentId],
+            queryKey: ["currentDocument", currentDocumentId],
             queryFn: () => getDocumentById(currentDocumentId),
         });
 

@@ -67,7 +67,6 @@ export async function loadAllDocuments(
     parentDocumentId?: string
 ) {
     let urlParams: string = worldId;
-
     // Optional argument of parentDocumentId gets only Documents with that documentId as there parentDocumentId
     if (parentDocumentId) {
         urlParams += "?parentDocumentId=" + parentDocumentId;
@@ -80,7 +79,6 @@ export async function loadAllDocuments(
         },
         credentials: "include",
     });
-
     if (!response.ok) {
         throw new Error("Retrieving documents failed");
     }

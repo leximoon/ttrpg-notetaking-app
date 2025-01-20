@@ -2,7 +2,7 @@
 
 import { loadAllDocuments } from "@/lib/api/documentsApi";
 import { Document } from "@/types/document";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Item } from "./item";
@@ -35,8 +35,8 @@ export const DocumentList = ({
 
     //Getting all documents by worldId, or getting all documents children to a parent document
     const { data: documents } = useQuery({
-        queryKey: ["documents"],
-        queryFn: () => loadAllDocuments(worldId, parentDocumentId),
+        queryKey: [`documents`, parentDocumentId ?? '-1'],
+        queryFn: () => loadAllDocuments(worldId, parentDocumentId)
     });
 
     //Load clicked document on page
@@ -58,7 +58,7 @@ export const DocumentList = ({
             </>
         );
     }
-    //TODO: FIX RECURSIVE ERROR
+    //TODO: FIX THIS SHIT
     return (
         <>
             <p
