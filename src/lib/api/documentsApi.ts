@@ -28,7 +28,7 @@ export async function updateDocument(
     content: any
 ) {
     const response = await fetch(`${API_BASE_URL}/documents/update`, {
-        method: "POST",
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
@@ -46,7 +46,7 @@ export async function updateDocument(
 
 export async function deleteDocument(documentId: string) {
     const response = await fetch(`${API_BASE_URL}/documents/delete`, {
-        method: "POST",
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json",
         },
