@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 
 const AppLayout = ({ children }: { children: ReactNode }) => {
     const { data: session } = useSession();
-    console.log({ session });
+
     return (
         <div className="bg-background w-screen h-screen flex justify-center items-center">
             {session?.user ? <>User loged in</> : <>User not loged in</>}
