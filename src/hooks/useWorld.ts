@@ -9,6 +9,7 @@ export function useWorlds(worldId?: string) {
     const [currentWorldId, setCurrentWorldId] = useState<string>(worldId ?? "");
     const [currentSessionWorlds, setCurrentSessionWorlds] = useState<World[]>();
 
+    //Function to add worlds
     const addWorld = useMutation({
         mutationFn: async (world: any) => {
             const { data } = await fetch(`/world`, {
@@ -23,6 +24,7 @@ export function useWorlds(worldId?: string) {
         },
     });
 
+    //function to
     const useCurrentWorld = () =>
         useQuery<World[] | null, Error>({
             queryKey: ["world", currentWorldId],

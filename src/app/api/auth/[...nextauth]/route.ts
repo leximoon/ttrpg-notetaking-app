@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { loginUser } from "@/lib/api/authApi";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -18,9 +17,14 @@ export const authOptions: NextAuthOptions = {
                     username: string;
                     password: string;
                 };
-                if (!credentials) return null;
+
                 //ApiCall to
-                const res = await loginUser(username, password);
+                console.log("credentials", { username, password });
+                const res = await fetch("http://localhost:5000/user/login", {
+                    method: "POST",
+                    body: JSON.stringify({ username, password }),
+                    headers: { "Content-Type": "application/json" },
+                });
 
                 const user = await res.json();
 
@@ -60,6 +64,7 @@ export const authServerOptions: NextAuthOptions = {
     callbacks: {
         ...authOptions.callbacks,
         async session({ token, session }) {
+            session.user = token.user;
             session.backendTokens = token.backendTokens;
             return session;
         },

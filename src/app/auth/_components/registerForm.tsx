@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/UI/button";
 import { FormInput } from "@/components/UI/form/formInput";
-import { registerUser } from "@/lib/api/authApi";
+import { useAuth } from "@/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -16,6 +16,7 @@ export const registerSchema = z.object({
 export type RegisterInput = z.infer<typeof registerSchema>;
 
 export const RegisterForm = () => {
+    const { register } = useAuth();
     const methods = useForm<RegisterInput>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -29,23 +30,14 @@ export const RegisterForm = () => {
 
     //Form submit handler
     const onSubmit = async function ({ email, password, name }: RegisterInput) {
-        try {
-            //ApiCall
-            const response = await registerUser(email, password, name);
-
-            if (!response.ok) {
-                throw new Error("Register failed");
-            }
-
-            await signIn("credentials", {
-                username: email,
-                password: password,
-                redirect: true,
-                callbackUrl: "/panel/worlds",
-            });
-        } catch (err) {
-            console.log(err);
-        }
+        const response = await register({ email, password, name });
+        console.log(response);
+        await signIn("credentials", {
+            username: email,
+            password: password,
+            redirect: true,
+            callbackUrl: "/panel/worlds",
+        });
     };
 
     return (
