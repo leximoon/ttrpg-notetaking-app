@@ -1,6 +1,6 @@
 "use client";
 
-import { loadAllDocuments } from "@/lib/api/documentsApi";
+import { loadDocuments } from "@/lib/api/documentsApi";
 import { Document } from "@/types/document";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
@@ -24,8 +24,9 @@ export const DocumentList = ({
 }: DocumentListProps) => {
     const params = useParams();
     const router = useRouter();
+    
+    // CONTROLLING IF EACH DOCUMENT ITEM'S DROPDOWN LIST EXPAND
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});
-
     const onExpand = (documentId: string) => {
         setExpanded((prevExpanded) => ({
             ...prevExpanded,
@@ -36,7 +37,7 @@ export const DocumentList = ({
     //Getting all documents by worldId, or getting all documents children to a parent document
     const { data: documents } = useQuery({
         queryKey: [`documents`, parentDocumentId ?? '-1'],
-        queryFn: () => loadAllDocuments(worldId, parentDocumentId)
+        queryFn: () => loadDocuments(worldId, parentDocumentId)
     });
 
     //Load clicked document on page
@@ -58,7 +59,7 @@ export const DocumentList = ({
             </>
         );
     }
-    //TODO: FIX THIS SHIT
+
     return (
         <>
             <p
@@ -67,7 +68,7 @@ export const DocumentList = ({
                 }}
                 className={twMerge(
                     clsx(
-                        "hidden text-sm font-medium text-primary-muted",
+                        "hidden text-sm font-medium text-primary-muted py-[4px]",
                         { "last:block": expanded },
                         { hidden: level === 0 }
                     )
@@ -82,6 +83,7 @@ export const DocumentList = ({
                             id={document.id}
                             onClick={() => onRedirect(document.id)}
                             label={document.title}
+                            parentDocumentId={document.parentDocumentId}
                             icon={FileIcon}
                             active={params.documentId === document.id}
                             level={level}
