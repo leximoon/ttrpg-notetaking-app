@@ -2,10 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { ListElement } from "./listElement";
-import { World } from "@/types/world";
 import { Map } from "lucide-react";
-import { getSessionWorlds } from "@/lib/api/worldsApi";
-import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useWorlds } from "@hooks/useWorld";
 
