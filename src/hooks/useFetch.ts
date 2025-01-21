@@ -3,7 +3,7 @@ import { FetchOptions } from "@/types/fetch";
 import { useCallback, useState } from "react";
 
 //hook to use the fetching library for api calls
-export function useFecth() {
+export function useFetch() {
     //data retrieved from the calls
     const [data, setData] = useState(null);
     //if the api call fails, the error will be save here
@@ -25,6 +25,7 @@ export function useFecth() {
                     ? `${baseUrl}${url}`
                     : `${proxyUrl}${url}`;
 
+                // call to the proxy url
                 const response = await fetch(fullUrl, {
                     headers: { "Content-Type": "application/json" },
                     method: fetchOptions.method,

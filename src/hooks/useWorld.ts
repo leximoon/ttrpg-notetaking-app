@@ -1,11 +1,11 @@
 import { World } from "@/types/world";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useFecth } from "./useFetch";
+import { useFetch } from "./useFetch";
 
 export function useWorlds(worldId?: string) {
     const queryClient = useQueryClient();
-    const { fetch } = useFecth();
+    const { fetch } = useFetch();
     const [currentWorldId, setCurrentWorldId] = useState<string>(worldId ?? "");
     const [currentSessionWorlds, setCurrentSessionWorlds] = useState<World[]>();
 

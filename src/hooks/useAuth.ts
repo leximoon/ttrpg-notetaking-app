@@ -1,8 +1,8 @@
 import { signIn } from "next-auth/react";
-import { useFecth } from "./useFetch";
+import { useFetch } from "./useFetch";
 
 export function useAuth() {
-    const { data, error, isLoading, fetch } = useFecth();
+    const { data, error, isLoading, fetch } = useFetch();
 
     const register = async (user: any) => {
         const response = await fetch(`/user/register`, {
