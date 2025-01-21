@@ -4,7 +4,7 @@ import React from "react";
 
 export default function RegisterPage() {
     return (
-        <AuthDialog title="Register">
+        <AuthDialog>
             <RegisterForm />
         </AuthDialog>
     );
