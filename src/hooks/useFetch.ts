@@ -33,7 +33,7 @@ export function useFetch() {
                         ? JSON.stringify(fetchOptions.body)
                         : undefined,
                 });
-
+                console.log(response);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -46,7 +46,7 @@ export function useFetch() {
 
                 //return for the callback when using .then
                 return { data: result, error: null, status: response.status };
-            } catch (err: any) {
+            } catch (err) {
                 //If error is catched we set the error and change loading state.
                 //If err is not given or is not an error, we instance a new unknown error
                 setError(

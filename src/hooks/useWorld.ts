@@ -11,7 +11,7 @@ export function useWorlds(worldId?: string) {
 
     //Function to add worlds
     const addWorld = useMutation({
-        mutationFn: async (world: any) => {
+        mutationFn: async (world) => {
             const { data } = await fetch(`/world`, {
                 method: "POST",
                 body: world,
