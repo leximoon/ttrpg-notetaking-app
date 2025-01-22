@@ -18,9 +18,12 @@ export async function GET(
 
     // Building the full API URL
     const backendUrl = process.env.BACKEND_URL;
-    const apiUrl = `${backendUrl}/${resolvedParams.path.join("/")}`;
+    const apiUrl = `${backendUrl}/${resolvedParams.path.join("/")}`.concat(
+        req.nextUrl.search
+    );
 
     try {
+        console.log(apiUrl);
         const response = await fetch(apiUrl, {
             method: "GET",
             headers: {
@@ -30,6 +33,7 @@ export async function GET(
         });
 
         const data = await response.json();
+
         return NextResponse.json(data, { status: response.status });
     } catch (error) {
         return NextResponse.json(
@@ -59,7 +63,9 @@ export async function POST(
 
     // Building the full API URL
     const backendUrl = process.env.BACKEND_URL;
-    const apiUrl = `${backendUrl}/${resolvedParams.path.join("/")}`;
+    const apiUrl = `${backendUrl}/${resolvedParams.path.join("/")}`.concat(
+        req.nextUrl.search
+    );
 
     const body = await req.json();
 
@@ -103,7 +109,9 @@ export async function PUT(
 
     // Building the full API URL
     const backendUrl = process.env.BACKEND_URL;
-    const apiUrl = `${backendUrl}/${resolvedParams.path.join("/")}`;
+    const apiUrl = `${backendUrl}/${resolvedParams.path.join("/")}`.concat(
+        req.nextUrl.search
+    );
 
     const body = await req.json();
 
@@ -147,7 +155,9 @@ export async function DELETE(
 
     // Building the full API URL
     const backendUrl = process.env.BACKEND_URL;
-    const apiUrl = `${backendUrl}/${resolvedParams.path.join("/")}`;
+    const apiUrl = `${backendUrl}/${resolvedParams.path.join("/")}`.concat(
+        req.nextUrl.search
+    );
 
     const body = await req.json();
 

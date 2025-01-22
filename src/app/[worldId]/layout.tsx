@@ -1,4 +1,4 @@
-import { Navigation } from "./_components/Navigation";
+import { Navigation } from "./_components/navigation";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
     //TODO: when we have auth, add check with spinner here.

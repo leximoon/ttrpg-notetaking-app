@@ -24,8 +24,8 @@ export function useFetch() {
                 const fullUrl = baseUrl
                     ? `${baseUrl}${url}`
                     : `${proxyUrl}${url}`;
-
                 // call to the proxy url
+
                 const response = await fetch(fullUrl, {
                     headers: { "Content-Type": "application/json" },
                     method: fetchOptions.method,
