@@ -1,14 +1,13 @@
-"use client";
 import React from "react";
-
-//import AuthDialog from "../_components/authDialog";
 import { LoginForm } from "../_components/loginForm";
 
 export default function LoginPage() {
     return (
-        <>
-            <LoginForm />
-            base
-        </>
+        <div className="flex h-full justify-center items-center">
+            <div className="w-1/4 bg- p-4 rounded-lg bg-card shadow-md shadow-shadowColor">
+                <h2 className="text-center m-2">Welcome to BookWyrm</h2>
+                <LoginForm />
+            </div>
+        </div>
     );
 }
