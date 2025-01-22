@@ -1,10 +1,16 @@
 "use client";
 
-import { ChevronsLeft, MenuIcon, PlusCircle, PlusCircleIcon, Search } from "lucide-react";
+import {
+    ChevronsLeft,
+    MenuIcon,
+    PlusCircle,
+    PlusCircleIcon,
+    Search,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import React, { ElementRef, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import { useDocument }  from "@/hooks/useDocument";
+import { useDocument } from "@/hooks/useDocument";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -36,9 +42,7 @@ export const Navigation = () => {
     // CREATING DOCUMENT
     const { addDocument } = useDocument();
     const handleDocument = () => {
-        addDocument.mutate(
-            {title:"Untitled", worldId}
-        );
+        addDocument.mutate({ title: "Untitled", worldId });
     };
 
     // MOUSE ACTION FUNCTIONS
@@ -148,10 +152,10 @@ export const Navigation = () => {
                 <div className="h-13">
                     <UserItem />
                     <Item
-                    label="Search"
-                    icon={Search}
-                    isSearch
-                    onClick={()=>{}}
+                        label="Search"
+                        icon={Search}
+                        isSearch
+                        onClick={() => {}}
                     />
                     <Item
                         onClick={handleDocument}
@@ -159,8 +163,9 @@ export const Navigation = () => {
                         icon={PlusCircle}
                     />
                 </div>
-                    <DocumentList // DOCUMENT LIST
-                    worldId={worldId} />
+                <DocumentList // DOCUMENT LIST
+                    worldId={worldId}
+                />
                 <div
                     // VERTICAL BAR FOR RESIZING SIDE BAR
                     className="opacity-0 group-hover/sidebar:opacity-100

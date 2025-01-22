@@ -48,7 +48,7 @@ export const Item = ({
         event.stopPropagation();
         onExpand?.();
     };
-    const {loadDocuments} = documentsApi();
+    const { loadDocuments } = documentsApi();
 
     const pathname = usePathname();
     const worldId = pathname.split("/")[1]; //get first element from url which is worldId
@@ -66,16 +66,18 @@ export const Item = ({
     };
 
     //DELETE DOCUMENT AND ITS CHILDREN
-    const deleteRecursive = async (id:string, parentDocumentId?:string) => {
-        delDocument.mutate({documentId: id, parentDocumentId: parentDocumentId})        
+    const deleteRecursive = async (id: string, parentDocumentId?: string) => {
+        delDocument.mutate({
+            documentId: id,
+            parentDocumentId: parentDocumentId,
+        });
 
         //delete all children
-        let documents = await loadDocuments(worldId, id)
-        if (documents){
-            for (let i in documents) 
-                deleteRecursive(documents[i].id, id)
+        let documents = await loadDocuments(worldId, id);
+        if (documents) {
+            for (let i in documents) deleteRecursive(documents[i].id, id);
         }
-    }
+    };
 
     const onDelete = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();

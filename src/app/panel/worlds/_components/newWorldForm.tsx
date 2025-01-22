@@ -43,7 +43,7 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
                 onSuccess: ({ id }) => {
                     console.log(`World created with id: ${id}`);
                     closeForm();
-                    router.push(`/${id}`);
+                    router.push(`/main/${id}`);
                 },
             }
         );

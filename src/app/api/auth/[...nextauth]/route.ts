@@ -1,6 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import NextAuth, { NextAuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+async function refreshToken(token: JWT): Promise<JWT> {
+    console.log("RefreshToken: ", token.backendTokens.refreshToken);
+    const res = await fetch(process.env.BACKEND_URL + "/user/refresh", {
+        method: "POST",
+        headers: {
+            authorization: `bearer ${token.backendTokens.refreshToken}`,
+        },
+    });
+    console.log("refreshed");
+
+    const response = await res.json();
+    return {
+        ...token,
+        backendTokens: response,
+    };
+}
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -44,8 +62,22 @@ export const authOptions: NextAuthOptions = {
         //Function called then nextAuth generate jwt. This will be called in logIn and when the session is checked
         async jwt({ token, user }) {
             //Check if the jwt callback is called in the login (user included) or not.
+
             if (user) return { ...token, ...user };
-            return token;
+
+            //Checking expiring time
+            if (new Date().getTime() < token.backendTokens.expiresIn) {
+                console.log(
+                    "Token refreshed: ",
+                    token.backendTokens.accessToken
+                );
+                return token;
+            }
+
+            //Refreshing access token
+            const refreshedToken = await refreshToken(token);
+            console.log("Token refreshed: ", refreshedToken);
+            return refreshedToken;
         },
 
         //Function called when the session is checked
