@@ -11,12 +11,12 @@ body,
 @layer base {
     :root {
         --text: 0 0% 15%;
-        --text-secondary: 0 0% 45%;
+        --text-secondary: 0 0% 25%;
         --background: 0 0% 92%;
 
         --primary: 102 54% 18%;
         --primary-contrast: 102 75% 30%;
-        --primary-muted: 102 25% 18%;
+        --primary-muted: 102 17% 34%;
         --secondary: 101 31% 62%;
         --secondary-contrast: 101 50% 40%;
         --secondary-muted: 101 15% 62%;
@@ -48,9 +48,6 @@ body,
         --card: 0 0% 20%;
         --border: 216 12% 18%;
     }
-}
-
-@layer base {
     * {
     }
     body {
@@ -65,5 +62,27 @@ body,
     h2 {
         @apply text-2xl;
         @apply font-bold;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 6px;
+        margin: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: hsl(var(--background));
+        border-radius: 5px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: hsl(var(--secondary));
+        border-radius: 24px;
+    }
+    /* To handle height for vertical scrollbar, you can control the thumb height */
+    ::-webkit-scrollbar-thumb {
+        max-height: 200px; /* Minimum height of the thumb handle */
     }
 }

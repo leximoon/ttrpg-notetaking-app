@@ -1,12 +1,12 @@
-"use client";
+import { authServerOptions } from "@/app/api/auth/[...nextauth]/route";
 
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 
-const AccountPage = () => {
-    const { data: session } = useSession();
-    console.log(JSON.stringify(session));
+const AccountPage = async () => {
+    const session = await getServerSession(authServerOptions);
+    console.log(session);
 
-    return <div>Account Page of {session?.user?.name}</div>;
+    return <div>Page of {session?.user.name}</div>;
 };
 
 export default AccountPage;

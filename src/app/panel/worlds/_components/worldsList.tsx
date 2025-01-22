@@ -1,23 +1,40 @@
-import React from "react";
+"use client"; /* eslint-disable @typescript-eslint/no-unused-vars */
+
+import React, { useEffect, useState } from "react";
 import { ListElement } from "./listElement";
-import { World } from "@/types/world";
 import { Map } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useWorlds } from "@hooks/useWorld";
 
-export default async function WorldsList() {
-    try {
-        const worldList: World[] = []; //await getSessionWorlds();
+export default function WorldsList() {
+    const { useCurrentSessionWorlds, currentSessionWorlds , } = useWorlds();
+    const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
-        if (worldList.length === 0) {
-            return <div>No worlds found</div>;
+    const handleClick = (id: string) => {
+        router.push(`/${id}/`);
+    };
+    useCurrentSessionWorlds();
+    useEffect(() => {
+        if (currentSessionWorlds) {
+            setIsLoading(false);
         }
-        return worldList.map((world) => (
-            <ListElement
-                name={world.name}
-                description={world.description}
-                icon={<Map />}
-            />
-        ));
-    } catch (e) {
-        return <div>Error loading worlds</div>;
+    }, [isLoading,currentSessionWorlds ]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
     }
+    if (currentSessionWorlds?.length === 0) {
+        return <div>No worlds found</div>;
+    }
+    return currentSessionWorlds?.map(({ name, description, id }) => (
+        <ListElement
+            key={id}
+            id={id}
+            name={name}
+            description={description}
+            icon={<Map />}
+            onClick={() => handleClick(id)}
+        />
+    ));
 }

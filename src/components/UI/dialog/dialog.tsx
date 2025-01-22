@@ -48,7 +48,7 @@ const Dialog = ({ children, isOpen, onClose, title }: DialogProps) => {
 
                 <div
                     ref={dialogRef}
-                    className="flex transform rounded-2xl bg-background text-left shadow-xl min-w-72"
+                    className="flex transform rounded-2xl bg-card text-left shadow-xl min-w-72"
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="dialog-title"
