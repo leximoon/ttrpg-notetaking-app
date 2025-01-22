@@ -7,19 +7,19 @@ import { useRouter } from "next/navigation";
 import { useWorlds } from "@hooks/useWorld";
 
 export default function WorldsList() {
-    const { useCurrentSessionWorlds, currentSessionWorlds , } = useWorlds();
+    const { useCurrentSessionWorlds, currentSessionWorlds } = useWorlds();
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
     const handleClick = (id: string) => {
-        router.push(`/${id}/`);
+        router.push(`/main/${id}/`);
     };
     useCurrentSessionWorlds();
     useEffect(() => {
         if (currentSessionWorlds) {
             setIsLoading(false);
         }
-    }, [isLoading,currentSessionWorlds ]);
+    }, [isLoading, currentSessionWorlds]);
 
     if (isLoading) {
         return <div>Loading...</div>;

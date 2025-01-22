@@ -67,6 +67,10 @@ export const authOptions: NextAuthOptions = {
 
             //Checking expiring time
             if (new Date().getTime() < token.backendTokens.expiresIn) {
+                console.log(
+                    "Token refreshed: ",
+                    token.backendTokens.accessToken
+                );
                 return token;
             }
 

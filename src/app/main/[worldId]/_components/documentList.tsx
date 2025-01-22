@@ -2,7 +2,7 @@
 
 import { documentsApi } from "@/lib/api/documentsApi";
 import { Document } from "@/types/document";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Item } from "./item";
@@ -24,8 +24,8 @@ export const DocumentList = ({
 }: DocumentListProps) => {
     const params = useParams();
     const router = useRouter();
-    const{loadDocuments} = documentsApi();
-    
+    const { loadDocuments } = documentsApi();
+
     // CONTROLLING IF EACH DOCUMENT ITEM'S DROPDOWN LIST EXPAND
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});
     const onExpand = (documentId: string) => {
@@ -37,12 +37,14 @@ export const DocumentList = ({
 
     //Getting all documents by worldId, or getting all documents children to a parent document
     const { data: documents } = useQuery({
-        queryKey: [`documents`, parentDocumentId ?? '-1'],
-        queryFn: () => loadDocuments(worldId, parentDocumentId)
+        queryKey: [`documents`, parentDocumentId ?? "-1"],
+        queryFn: () => loadDocuments(worldId, parentDocumentId),
     });
 
     //Load clicked document on page
     const onRedirect = (documentId: string) => {
+        console.log("WorldID", worldId);
+        console.log("DocumentId", documentId);
         router.push(`/${worldId}/${documentId}`);
     };
 
