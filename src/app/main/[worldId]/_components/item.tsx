@@ -5,7 +5,7 @@ import {
     ChevronRight,
     LucideIcon,
     Plus,
-    Trash,
+    Trash2,
 } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
@@ -133,7 +133,7 @@ export const Item = ({
                         className="opacity-0 group-hover:opacity-100 h-full ml-auto
                     rounded-sm hover:bg-secondary "
                     >
-                        <Trash className="h-4 w-4 text-primary-muted" />
+                        <Trash2 className="h-4 w-4 text-primary-muted" />
                     </div>
                     <div
                         role="button"
