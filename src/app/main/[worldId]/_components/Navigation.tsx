@@ -4,7 +4,6 @@ import {
     ChevronsLeft,
     MenuIcon,
     PlusCircle,
-    PlusCircleIcon,
     Search,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -15,9 +14,7 @@ import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 
 import { UserItem } from "./userItem";
-import { loadAllDocuments } from "@/lib/api/documentsApi";
 import { Item } from "./item";
-import { useQuery } from "@tanstack/react-query";
 import { DocumentList } from "./documentList";
 
 // ALL NAVIGATION
@@ -37,7 +34,7 @@ export const Navigation = () => {
     const [isCollapsed, setIsCollapsed] = useState(isSmall);
 
     // LOADING DOCUMENTS
-    const worldId = pathname.split("/")[1]; //get first element from url which is worldId
+    const worldId = pathname.split("/")[2]; //get first element from url which is worldId
 
     // CREATING DOCUMENT
     const { addDocument } = useDocument();

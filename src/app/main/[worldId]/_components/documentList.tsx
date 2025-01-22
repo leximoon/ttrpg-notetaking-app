@@ -43,9 +43,7 @@ export const DocumentList = ({
 
     //Load clicked document on page
     const onRedirect = (documentId: string) => {
-        console.log("WorldID", worldId);
-        console.log("DocumentId", documentId);
-        router.push(`/${worldId}/${documentId}`);
+        router.push(`/main/${worldId}/${documentId}`);
     };
 
     // Manages documents loading

@@ -25,7 +25,6 @@ export function useFetch() {
                     ? `${baseUrl}${url}`
                     : `${proxyUrl}${url}`;
                 // call to the proxy url
-
                 const response = await fetch(fullUrl, {
                     headers: { "Content-Type": "application/json" },
                     method: fetchOptions.method,
@@ -33,7 +32,6 @@ export function useFetch() {
                         ? JSON.stringify(fetchOptions.body)
                         : undefined,
                 });
-                console.log(response);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

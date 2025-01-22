@@ -51,7 +51,7 @@ export const Item = ({
     const { loadDocuments } = documentsApi();
 
     const pathname = usePathname();
-    const worldId = pathname.split("/")[1]; //get first element from url which is worldId
+    const worldId = pathname.split("/")[2]; //get first element from url which is worldId
 
     // CREATE NEW DOCUMENT
     const { addDocument, delDocument } = useDocument();
@@ -63,6 +63,7 @@ export const Item = ({
             worldId: worldId,
             parentDocumentId: id,
         });
+
     };
 
     //DELETE DOCUMENT AND ITS CHILDREN
@@ -74,6 +75,7 @@ export const Item = ({
 
         //delete all children
         let documents = await loadDocuments(worldId, id);
+
         if (documents) {
             for (let i in documents) deleteRecursive(documents[i].id, id);
         }
