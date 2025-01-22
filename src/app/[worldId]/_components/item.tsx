@@ -12,7 +12,7 @@ import clsx from "clsx";
 import { Skeleton } from "@nextui-org/skeleton";
 import { useDocument } from "@/hooks/useDocument";
 import { usePathname } from "next/navigation";
-import { loadDocuments } from "@/lib/api/documentsApi";
+import { documentsApi } from "@/lib/api/documentsApi";
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Document } from "@/types/document";
 
@@ -48,6 +48,7 @@ export const Item = ({
         event.stopPropagation();
         onExpand?.();
     };
+    const {loadDocuments} = documentsApi();
 
     const pathname = usePathname();
     const worldId = pathname.split("/")[1]; //get first element from url which is worldId

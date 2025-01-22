@@ -1,13 +1,7 @@
-import {
-    createDocument,
-    deleteDocument,
-    getDocumentById,
-    loadDocuments,
-    updateDocument,
-} from "@/lib/api/documentsApi";
+import {documentsApi} from "@/lib/api/documentsApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Document } from "@/types/document";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 export function useDocument({
     worldId,
@@ -17,6 +11,7 @@ export function useDocument({
     const [currentDocumentId, setCurrentDocumentId] = useState<string>(
         documentId ?? ""
     );
+    const {createDocument,deleteDocument,getDocumentById,updateDocument} = documentsApi();
 
     const addDocument = useMutation({
         mutationFn: async ({

@@ -1,14 +1,10 @@
 "use client";
 
-<<<<<<< HEAD
-import { useScrollTop } from "../../../hooks/useScrollTop";
-=======
->>>>>>> origin/dev
 import clsx from "clsx";
 import { Logo } from "./logo";
 import { Button } from "@/components/UI/button";
 import { redirect, RedirectType } from "next/navigation";
-import { useScrollTop } from "@/hooks/use-scroll-top";
+import { useScrollTop } from "@/hooks/useScrollTop";
 
 export const NavBar = () => {
     const scrolled = useScrollTop();

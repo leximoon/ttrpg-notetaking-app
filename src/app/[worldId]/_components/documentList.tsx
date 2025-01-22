@@ -1,6 +1,6 @@
 "use client";
 
-import { loadDocuments } from "@/lib/api/documentsApi";
+import { documentsApi } from "@/lib/api/documentsApi";
 import { Document } from "@/types/document";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
@@ -24,6 +24,7 @@ export const DocumentList = ({
 }: DocumentListProps) => {
     const params = useParams();
     const router = useRouter();
+    const{loadDocuments} = documentsApi();
     
     // CONTROLLING IF EACH DOCUMENT ITEM'S DROPDOWN LIST EXPAND
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});

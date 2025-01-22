@@ -1,4 +1,4 @@
-import { NavBar } from "./_components/nav-bar";
+import { NavBar } from "./_components/navbar";
 
 const LandingPageLayout = ({
     children,

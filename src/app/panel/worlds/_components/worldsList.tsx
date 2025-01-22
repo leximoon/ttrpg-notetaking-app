@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useWorlds } from "@hooks/useWorld";
 
 export default function WorldsList() {
-    const { useCurrentSessionWorlds, currentSessionWorlds } = useWorlds();
+    const { useCurrentSessionWorlds, currentSessionWorlds , } = useWorlds();
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
@@ -19,7 +19,7 @@ export default function WorldsList() {
         if (currentSessionWorlds) {
             setIsLoading(false);
         }
-    }, [currentSessionWorlds]);
+    }, [isLoading,currentSessionWorlds ]);
 
     if (isLoading) {
         return <div>Loading...</div>;
