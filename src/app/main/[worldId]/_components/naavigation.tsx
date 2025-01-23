@@ -4,6 +4,7 @@ import {
     ChevronsLeft,
     MenuIcon,
     PlusCircle,
+    PlusIcon,
     Search,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -34,7 +35,7 @@ export const Navigation = () => {
     const [isCollapsed, setIsCollapsed] = useState(isSmall);
 
     // LOADING DOCUMENTS
-    const worldId = pathname.split("/")[2]; //get first element from url which is worldId
+    const worldId = pathname.split("/")[2]; //get second element from url which is worldId
 
     // CREATING DOCUMENT
     const { addDocument } = useDocument();
@@ -147,7 +148,6 @@ export const Navigation = () => {
                     <ChevronsLeft className="h-6 w-6" />
                 </div>
                 <div className="h-13">
-                    <UserItem />
                     <Item
                         label="Search"
                         icon={Search}
@@ -170,7 +170,9 @@ export const Navigation = () => {
                     onMouseDown={handleMouseDown}
                     onClick={resetWidth}
                 />
+
             </aside>
+
             <div
                 ref={navBarRef}
                 className={twMerge(
