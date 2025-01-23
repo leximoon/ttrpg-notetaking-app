@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 import { useWorlds } from "@hooks/useWorld";
 
 export default function WorldsList() {
-    const { useCurrentSessionWorlds, currentSessionWorlds } = useWorlds();
+    const { deleteWorld, useCurrentSessionWorlds, currentSessionWorlds } =
+        useWorlds();
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
@@ -35,6 +36,9 @@ export default function WorldsList() {
             description={description}
             icon={<Map />}
             onClick={() => handleClick(id)}
+            onDelete={() =>
+                deleteWorld.mutate({ worldId: id }, { onSuccess: () => {} })
+            }
         />
     ));
 }
