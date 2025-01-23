@@ -22,9 +22,6 @@ const meta: Meta<typeof Button> = {
             control: "select",
             options: ["s", "m", "l"],
         },
-        fillOut: {
-            control: "boolean",
-        },
         onClick: { action: "clicked" },
     },
 };
@@ -45,9 +42,6 @@ export const Single: Story = {
 //Button color Story
 
 export const Intent: Story = {
-    args: {
-        fillOut: false,
-    },
     render: (args) => (
         <div className="flex gap-4">
             <Button {...args} intent="primary" label="Primary" />
@@ -59,9 +53,6 @@ export const Intent: Story = {
 //Button form Story
 
 export const Variants: Story = {
-    args: {
-        fillOut: false,
-    },
     render: (args) => (
         <div className="flex gap-4">
             <Button {...args} variant="fill" label="Fill" />
@@ -73,9 +64,6 @@ export const Variants: Story = {
 //Button sizes Story
 
 export const Sizes: Story = {
-    args: {
-        fillOut: false,
-    },
     render: (args) => (
         <div className="">
             <Button {...args} size="s" label="Small" className="mx-2" />

@@ -40,6 +40,9 @@ const config = {
                     contrast: "hsl(var(--accent-contrast))",
                     muted: "hsl(var(--accent-muted))",
                 },
+                danger: {
+                    DEFAULT: "hsl(var(--error))",
+                },
 
                 text: {
                     DEFAULT: "hsl(var(--text))",

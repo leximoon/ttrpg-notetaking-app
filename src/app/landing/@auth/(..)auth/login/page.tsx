@@ -8,7 +8,9 @@ import React from "react";
 export default function LoginPage() {
     return (
         <AuthDialog>
-            <LoginForm />
+            <div className="w-[300px]">
+                <LoginForm />
+            </div>
         </AuthDialog>
     );
 }
