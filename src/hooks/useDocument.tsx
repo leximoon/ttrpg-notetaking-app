@@ -11,7 +11,7 @@ export function useDocument({
     const [currentDocumentId, setCurrentDocumentId] = useState<string>(
         documentId ?? ""
     );
-    const {createDocument,deleteDocument,getDocumentById,updateDocument} = documentsApi();
+    const {createDocument,deleteDocument,updateDocument} = documentsApi();
 
     const addDocument = useMutation({
         mutationFn: async ({
@@ -77,6 +77,7 @@ export function useDocument({
             queryKey: ["currentDocument", currentDocumentId],
             queryFn: () => getDocumentById(currentDocumentId),
         });
+        
 
     return {
         addDocument,
