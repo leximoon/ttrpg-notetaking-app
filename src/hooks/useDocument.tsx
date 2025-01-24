@@ -5,10 +5,13 @@ import { useState } from "react";
 
 export function useDocument({
     worldId,
+    documentId
 }: { worldId?: string; documentId?: string } = {}) {
     const queryClient = useQueryClient();
-    const { createDocument, deleteDocument, getDocumentById, updateDocument } =
-        documentsApi();
+    const [currentDocumentId, setCurrentDocumentId] = useState<string>(
+        documentId ?? ""
+    );
+    const {createDocument,deleteDocument,getDocumentById,updateDocument} = documentsApi();
 
     const addDocument = useMutation({
         mutationFn: async ({
@@ -77,6 +80,7 @@ export function useDocument({
             queryFn: () => getDocumentById(id),
             enabled: !!id,
         });
+        
 
     return {
         addDocument,

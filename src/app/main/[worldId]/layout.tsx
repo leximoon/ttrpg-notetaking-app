@@ -1,9 +1,6 @@
 import { Navigation } from "./_components/navigation";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
-    //TODO: when we have auth, add check with spinner here.
-    //TODO: Add redirect if not authenticated as well.
-
     return (
         <div className="h-full flex bg-background">
             <Navigation />

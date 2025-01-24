@@ -11,7 +11,6 @@ const button = cva(
             intent: {
                 primary: [""],
                 secondary: [""],
-                sidebaritem: [""],
                 danger: ["text-text"],
             },
             //Define the style of the button

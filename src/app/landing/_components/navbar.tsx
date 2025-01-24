@@ -13,7 +13,7 @@ export const NavBar = () => {
         <div
             className={clsx(
                 "z-50 bg-background fixed top-0 flex items-center w-full p-6",
-                { "border-red-400 shadow-sm": scrolled }
+                { "border-green-800 shadow-sm": scrolled }
             )}
         >
             <Logo />
