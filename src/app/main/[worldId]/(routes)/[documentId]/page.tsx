@@ -6,6 +6,8 @@ import { useDocument } from "@/hooks/useDocument";
 import { Toolbar } from "./_components/Toolbar";
 import { Skeleton } from "@nextui-org/skeleton";
 import { Editor } from "./_components/Editor";
+import { Button } from "@/components/UI/button";
+import Template from "@/data/templates.json";
 
 interface DocumentPageProps {
     params: Promise<{ documentId: string }>;
@@ -42,12 +44,70 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
     if (!document) {
         return <div>Document not found!</div>;
     }
+
+    function loadTemplate(name: string) {
+        const temp = Template.templates.find((t) => t.name === name);
+        const content = temp ? temp.content : null;
+        mutate({
+            documentId: documentId,
+            field: "content",
+            content: JSON.stringify(content),
+        });
+    }
+
     return (
         <div className="pb-40">
-            <div className="pl-56">
-                <Toolbar initialData={document} />
-                <Editor onChange={onChange} initialContent={document.content} />
-            </div>
+            {document.content ? (
+                <div className="pl-56">
+                    <Toolbar initialData={document} />
+                    <Editor
+                        onChange={onChange}
+                        initialContent={document.content}
+                    />
+                </div>
+            ) : (
+                <div className="flex h-screen justify-center items-center">
+                    <div className="p-5 bg-background-muted/10 rounded-md flex flex-row gap-5 max-w-3xl flex-wrap">
+                        <Button
+                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
+                            intent="secondary"
+                            variant="dashed"
+                            label="Blank"
+                            onClick={() => loadTemplate("blank")}
+                        ></Button>
+                        <Button
+                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
+                            intent="secondary"
+                            variant="dashed"
+                            label="Template"
+                        ></Button>
+                        <Button
+                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
+                            intent="secondary"
+                            variant="dashed"
+                            label="Template"
+                        ></Button>
+                        <Button
+                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
+                            intent="secondary"
+                            variant="dashed"
+                            label="Template"
+                        ></Button>
+                        <Button
+                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
+                            intent="secondary"
+                            variant="dashed"
+                            label="Template"
+                        ></Button>
+                        <Button
+                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
+                            intent="secondary"
+                            variant="dashed"
+                            label="Template"
+                        ></Button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -1,0 +1,37 @@
+{
+    "templates": [
+        {
+            "name": "blank",
+            "content": [
+                {
+                    "id": "dd30a994-e04c-4407-ae27-58ae56bb6ad9",
+                    "type": "paragraph",
+                    "props": {
+                        "textColor": "default",
+                        "backgroundColor": "default",
+                        "textAlignment": "left"
+                    },
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "Mi nueva y maravillosa template",
+                            "styles": {}
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "id": "db1e6b4f-b2b8-4dab-8082-a48d553b6821",
+                    "type": "paragraph",
+                    "props": {
+                        "textColor": "default",
+                        "backgroundColor": "default",
+                        "textAlignment": "left"
+                    },
+                    "content": [],
+                    "children": []
+                }
+            ]
+        }
+    ]
+}
