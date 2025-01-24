@@ -6,17 +6,20 @@ import {
     AddTagDialogRef,
 } from "@/app/main/[worldId]/(routes)/[documentId]/_components/addTagDialog";
 import { Button } from "./UI/button";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Plus } from "lucide-react";
 
 interface TagBoxProps {
     title?: string;
     tags: string[];
+    onChange: (newTags: string[]) => void;
 }
 
-export const TagBox = ({ title, tags }: TagBoxProps) => {
+export const TagBox = ({ title, tags, onChange }: TagBoxProps) => {
     const authDialogRef = useRef<AddTagDialogRef>(null);
-    const [tagList, setTagList] = useState<string[]>(tags);
+    const [tagList, setTagList] = useState<string[]>(
+        tags != undefined ? tags : [""]
+    );
 
     const handleOpening = () => {
         if (authDialogRef.current) {
@@ -24,16 +27,18 @@ export const TagBox = ({ title, tags }: TagBoxProps) => {
         }
     };
     const onAddTag = (tag: string) => {
-        setTagList([...tagList, tag]);
+        setTagList((prevData) => [...prevData, tag]);
+        onChange([...tagList, tag]);
     };
 
     return (
-        <div className="min-h-48">
-            <span className="mb-4 font-bold text-2xl">{title}</span>
+        <div className="min-h-48 p-4">
+            <span className="mb-4 font-bold text-2xl cursor-default">
+                {title}
+            </span>
+
             <div className="flex flex-wrap">
-                {tagList.map((t, index) => (
-                    <Tag key={index} label={t} />
-                ))}
+                {tagList.map((t, index) => t && <Tag key={index} label={t} />)}
                 <Button
                     className="!mr-2 !mb-2 !px-1 !py-0.5 table-cell !rounded text-text-primary text-xs font-bold"
                     intent="secondary"

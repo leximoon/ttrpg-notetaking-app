@@ -5,9 +5,17 @@ export type Document = {
     worldId: string;
     parentDocumentId?: string;
     content?: string;
-    metadata?: JSON;
+    metadata?: string;
     bannerImage?: String;
     icon?: String;
     isArchived: boolean;
     isPublic: boolean;
+};
+
+export type TMetadata = {
+    tags: string[];
+    info: {
+        title: string;
+        content: string;
+    }[];
 };

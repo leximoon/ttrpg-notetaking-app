@@ -20,12 +20,17 @@ export const AddTagDialog = forwardRef<AddTagDialogRef, AddTagDialogProps>(
         const [newTag, setNewTag] = useState("");
         const [open, setOpen] = useState(false);
 
-        const handleSubmit = () => {
+        const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            handleClose();
+        };
+
+        const handleClose = () => {
             if (newTag.trim()) {
                 onAddTag(newTag.trim());
                 setNewTag("");
-                setOpen(false);
             }
+            setOpen(false);
         };
 
         useImperativeHandle(ref, () => ({
@@ -33,7 +38,7 @@ export const AddTagDialog = forwardRef<AddTagDialogRef, AddTagDialogProps>(
         }));
 
         return (
-            <Dialog isOpen={open} onClose={handleSubmit} title="Add new tag">
+            <Dialog isOpen={open} onClose={handleClose} title="Add new tag">
                 <div className="w-full">
                     <div>
                         <div>Enter the new tag name</div>

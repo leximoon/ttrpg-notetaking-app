@@ -1,5 +1,5 @@
 "use client";
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import { Spinner } from "@/components/UI/spinner";
 import { useDocument } from "@/hooks/useDocument";
 
@@ -7,9 +7,14 @@ import { Toolbar } from "./_components/Toolbar";
 import { Skeleton } from "@nextui-org/skeleton";
 import { Editor } from "./_components/Editor";
 import { Button } from "@/components/UI/button";
-import Template from "@/data/templates.json";
 import { TagBox } from "@/components/tagBox";
 import { Metadata } from "./_components/Metadata";
+
+//Data imports
+
+import Template from "@/data/templates.json";
+import Data from "@/data/metadataExample.json";
+import { TMetadata } from "@/types/document";
 
 interface DocumentPageProps {
     params: Promise<{ documentId: string }>;
@@ -19,11 +24,36 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
     const { documentId } = use(params);
     const { editDocument, getCurrentDocument } = useDocument();
     const { data: document, isLoading, error } = getCurrentDocument(documentId);
+    const [meta, setMeta] = useState<TMetadata>({
+        tags: [],
+        info: [],
+    });
     const { mutate } = editDocument;
-
-    const onChange = (content: string) => {
-        mutate({ documentId: documentId, field: "content", content: content });
+    let parsedMeta: TMetadata = {
+        tags: [],
+        info: [],
     };
+
+    const onChange = (content: any, field: string) => {
+        let newMeta: TMetadata = meta;
+        console.log();
+        if (field === "tags") {
+            newMeta.tags = content;
+            field = "metadata";
+        }
+        if (field === "meta") {
+            newMeta.info = content;
+            field = "metadata";
+        }
+        console.log(newMeta);
+
+        mutate({
+            documentId: documentId,
+            field: field,
+            content: field === "metadata" ? newMeta : content,
+        });
+    };
+
     if (isLoading) {
         return (
             <div>
@@ -38,6 +68,8 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
                 </div>
             </div>
         );
+    } else {
+        if (document?.metadata) parsedMeta = JSON.parse(document?.metadata);
     }
     if (error) {
         console.error("Error fetching document:", error);
@@ -57,53 +89,6 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
         });
     }
 
-    const tags1 = ["White dragon", "Dungeon", "Long sword", "Magic"];
-
-    const tags2 = [
-        "White dragon",
-        "Dungeon",
-        "Long sword",
-        "Magic",
-        "Elf",
-        "Orc",
-        "Wizard tower",
-        "Tavern",
-    ];
-
-    const tags3 = [
-        "White dragon",
-        "Dungeon",
-        "Long sword",
-        "Magic",
-        "Elf",
-        "Orc",
-        "Wizard tower",
-        "Tavern",
-        "Quest",
-        "Paladin",
-        "Goblin",
-        "Shadow ranger",
-    ];
-
-    const tags4 = [
-        "White dragon",
-        "Dungeon",
-        "Long sword",
-        "Magic",
-        "Elf",
-        "Orc",
-        "Wizard tower",
-        "Tavern",
-        "Quest",
-        "Paladin",
-        "Goblin",
-        "Shadow ranger",
-        "Bard",
-        "Necromancer",
-        "Hidden treasure",
-        "Trap",
-    ];
-
     return (
         <div className="relative top-[50px] h-[calc(100%-50px)]">
             {document.content ? (
@@ -111,13 +96,26 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
                     <div className="pb-40">
                         <Toolbar initialData={document} />
                         <Editor
-                            onChange={onChange}
+                            onChange={(content) => {
+                                onChange(content, "content");
+                            }}
                             initialContent={document.content}
                         />
                     </div>
-                    <div className="bg-background-muted/10 w-1/6 h-dvh shadow-md shadow-shadow p-4 flex-wrap">
-                        <TagBox title="TAGS" tags={tags1} />
-                        <Metadata />
+                    <div className="bg-background-muted/10 w-1/5 h-dvh shadow-md shadow-shadow flex-wrap">
+                        <TagBox
+                            title="TAGS"
+                            tags={parsedMeta?.tags}
+                            onChange={(newTags) => {
+                                onChange(newTags, "tags");
+                            }}
+                        />
+                        <Metadata
+                            initialData={parsedMeta?.info}
+                            onChange={(content, key) => {
+                                onChange(content, "meta");
+                            }}
+                        />
                     </div>
                 </div>
             ) : (
