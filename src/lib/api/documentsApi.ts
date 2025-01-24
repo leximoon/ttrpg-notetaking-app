@@ -76,7 +76,7 @@ export function documentsApi() {
     }
 
     async function getDocumentById(documentId: string) {
-        const { data } = await fetch(`/documents/${documentId}`, {
+        const { data } = await fetch(`/documents/load/${documentId}`, {
             method: "GET",
         });
 
