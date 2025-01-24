@@ -8,6 +8,8 @@ import { Skeleton } from "@nextui-org/skeleton";
 import { Editor } from "./_components/Editor";
 import { Button } from "@/components/UI/button";
 import Template from "@/data/templates.json";
+import { TagBox } from "@/components/tagBox";
+import { Metadata } from "./_components/Metadata";
 
 interface DocumentPageProps {
     params: Promise<{ documentId: string }>;
@@ -55,15 +57,68 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
         });
     }
 
+    const tags1 = ["White dragon", "Dungeon", "Long sword", "Magic"];
+
+    const tags2 = [
+        "White dragon",
+        "Dungeon",
+        "Long sword",
+        "Magic",
+        "Elf",
+        "Orc",
+        "Wizard tower",
+        "Tavern",
+    ];
+
+    const tags3 = [
+        "White dragon",
+        "Dungeon",
+        "Long sword",
+        "Magic",
+        "Elf",
+        "Orc",
+        "Wizard tower",
+        "Tavern",
+        "Quest",
+        "Paladin",
+        "Goblin",
+        "Shadow ranger",
+    ];
+
+    const tags4 = [
+        "White dragon",
+        "Dungeon",
+        "Long sword",
+        "Magic",
+        "Elf",
+        "Orc",
+        "Wizard tower",
+        "Tavern",
+        "Quest",
+        "Paladin",
+        "Goblin",
+        "Shadow ranger",
+        "Bard",
+        "Necromancer",
+        "Hidden treasure",
+        "Trap",
+    ];
+
     return (
-        <div className="pb-40">
+        <div className="relative top-[50px] h-[calc(100%-50px)]">
             {document.content ? (
-                <div className="pl-56">
-                    <Toolbar initialData={document} />
-                    <Editor
-                        onChange={onChange}
-                        initialContent={document.content}
-                    />
+                <div className="pl-56  flex flex-row justify-between">
+                    <div className="pb-40">
+                        <Toolbar initialData={document} />
+                        <Editor
+                            onChange={onChange}
+                            initialContent={document.content}
+                        />
+                    </div>
+                    <div className="bg-background-muted/10 w-1/6 h-dvh shadow-md shadow-shadow p-4 flex-wrap">
+                        <TagBox title="TAGS" tags={tags1} />
+                        <Metadata />
+                    </div>
                 </div>
             ) : (
                 <div className="flex h-screen justify-center items-center">

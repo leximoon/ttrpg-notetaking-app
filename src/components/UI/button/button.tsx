@@ -34,12 +34,12 @@ const button = cva(
             {
                 intent: "primary",
                 variant: "fill",
-                class: "bg-primary/70 hover:bg-primary",
+                class: "bg-primary hover:bg-primary/70",
             },
             {
                 intent: "secondary",
                 variant: "fill",
-                class: "bg-secondary/70 hover:bg-secondary",
+                class: "bg-secondary hover:bg-secondary/70",
             },
             {
                 intent: "primary",
