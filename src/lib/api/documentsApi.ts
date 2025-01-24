@@ -79,6 +79,17 @@ export function documentsApi() {
 		const { data } = await fetch(`/documents/breadcrumbs/${documentId}`, {
 			method: 'GET',
 		});
+		if (!data) {
+			throw new Error('Fetching breadcrumbs failed');
+		}
+
+		return data;
+	}
+
+	async function getDocumentById(documentId: string) {
+		const { data } = await fetch(`/documents/load/${documentId}`, {
+			method: 'GET',
+		});
 
 		if (!data) {
 			throw new Error('Fetching document failed');
@@ -92,6 +103,7 @@ export function documentsApi() {
 		loadDocuments,
 		updateDocument,
 		deleteDocument,
+		getDocumentById,
 		getBreadcrumbsById,
 	};
 }

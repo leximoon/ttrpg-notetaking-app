@@ -59,7 +59,7 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
                     isRequired
                 />
                 <FormTextArea
-                    className="mb-2 w-96 h-32"
+                    className="mt-3 w-96 h-32"
                     placeholder="Enter world description"
                     name="description"
                 />
@@ -70,7 +70,11 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
                         You can change this later
                     </span>
                 </div>
-                <Button intent="secondary" label="Create world" fillOut />
+                <Button
+                    intent="secondary"
+                    label="Create world"
+                    className="w-full table-cell"
+                />
             </form>
         </FormProvider>
     );

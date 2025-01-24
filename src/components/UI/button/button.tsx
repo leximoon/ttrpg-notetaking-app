@@ -11,12 +11,13 @@ const button = cva(
             intent: {
                 primary: [""],
                 secondary: [""],
+                danger: ["text-text"],
             },
             //Define the style of the button
             variant: {
                 fill: ["border-transparent"],
                 dashed: ["text-text font-semibold border-2 border-dashed"],
-                transparent: ["border-transparent bg-transparent !p-0"],
+                transparent: ["border-transparent bg-transparent"],
             },
             //Define the size of the button
             size: {
@@ -49,6 +50,16 @@ const button = cva(
                 variant: "dashed",
                 class: "border-secondary hover:bg-secondary/30",
             },
+            {
+                intent: "danger",
+                variant: "fill",
+                class: "bg-danger/70 hover:bg-danger",
+            },
+            {
+                intent: "danger",
+                variant: "transparent",
+                class: "hover:bg-danger/40",
+            },
         ],
         /**
          * Default values
@@ -67,7 +78,6 @@ interface ButtonProps
         VariantProps<typeof button> {
     label?: string;
     //Prop to fill the whole content where the button is placed
-    fillOut?: boolean;
     icon?: React.ReactNode;
 }
 
@@ -78,14 +88,13 @@ const Button = ({
     className,
     icon,
     label,
-    fillOut = false,
     onClick,
     ...props
 }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className={`${fillOut && "w-full h-full"} ${button({
+            className={`${button({
                 className,
                 intent,
                 size,
@@ -93,7 +102,7 @@ const Button = ({
             })}`}
             {...props}
         >
-            {icon}
+            <span>{icon}</span>
             {label}
         </button>
     );

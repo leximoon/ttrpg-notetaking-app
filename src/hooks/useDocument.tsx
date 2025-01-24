@@ -1,17 +1,17 @@
-import {documentsApi} from "@/lib/api/documentsApi";
+import { documentsApi } from "@/lib/api/documentsApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Document } from "@/types/document";
 import { useState } from "react";
 
 export function useDocument({
     worldId,
-    documentId,
+    documentId
 }: { worldId?: string; documentId?: string } = {}) {
     const queryClient = useQueryClient();
     const [currentDocumentId, setCurrentDocumentId] = useState<string>(
         documentId ?? ""
     );
-    const {createDocument,deleteDocument,updateDocument} = documentsApi();
+    const {createDocument,deleteDocument,getDocumentById,updateDocument} = documentsApi();
 
     const addDocument = useMutation({
         mutationFn: async ({
@@ -48,9 +48,12 @@ export function useDocument({
         }) => {
             return updateDocument(documentId, field, content);
         },
-        onSuccess: ({ parentDocumentId }) => {
+        onSuccess: ({ id, parentDocumentId }) => {
             queryClient.invalidateQueries({
                 queryKey: ["documents", parentDocumentId ?? "-1"],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["document", id],
             });
         },
     });
@@ -65,17 +68,17 @@ export function useDocument({
         }) => {
             return deleteDocument(documentId);
         },
-        onSuccess: ({parentDocumentId}) => {
+        onSuccess: ({ parentDocumentId }) => {
             queryClient.invalidateQueries({
                 queryKey: ["documents", parentDocumentId ?? "-1"],
             });
         },
     });
-
-    const useCurrentDocument = () =>
-        useQuery<Document | null, Error>({
-            queryKey: ["currentDocument", currentDocumentId],
-            queryFn: () => getDocumentById(currentDocumentId),
+    const getCurrentDocument = (id: string) =>
+        useQuery<Document, Error>({
+            queryKey: ["document", id],
+            queryFn: () => getDocumentById(id),
+            enabled: !!id,
         });
         
 
@@ -83,6 +86,6 @@ export function useDocument({
         addDocument,
         editDocument,
         delDocument,
-        useCurrentDocument,
+        getCurrentDocument,
     };
 }

@@ -5,7 +5,7 @@ import { useFetch } from './useFetch';
 
 export function useWorlds(worldId?: string) {
 	const queryClient = useQueryClient();
-	const { fetch } = useFetch();
+	const { error, fetch } = useFetch();
 	const [currentWorldId, setCurrentWorldId] = useState<string>(worldId ?? '');
 	const [currentSessionWorlds, setCurrentSessionWorlds] = useState<World[]>();
 
@@ -19,8 +19,22 @@ export function useWorlds(worldId?: string) {
 			return data;
 		},
 		onSuccess: ({ id }) => {
-			setCurrentWorldId(id);
 			queryClient.invalidateQueries({ queryKey: ['worlds'] });
+		},
+	});
+	const deleteWorld = useMutation({
+		mutationFn: async ({ worldId }: { worldId: string }) => {
+			const { data } = await fetch(`/world/delete`, {
+				method: 'DELETE',
+				body: { worldId: worldId },
+			});
+			return data;
+		},
+		onSuccess: ({ id }) => {
+			queryClient.invalidateQueries({ queryKey: ['worlds'] });
+		},
+		onError: (e) => {
+			console.log('Error: ', e?.message);
 		},
 	});
 
@@ -35,7 +49,7 @@ export function useWorlds(worldId?: string) {
 
 	const useCurrentSessionWorlds = () =>
 		useQuery<World | null, Error>({
-			queryKey: ['world', currentWorldId],
+			queryKey: ['world'],
 			queryFn: async () => {
 				const { data } = await fetch(`/world/me`, { method: 'GET' });
 				if (data) setCurrentSessionWorlds(data);

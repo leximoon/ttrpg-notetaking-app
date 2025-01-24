@@ -4,16 +4,16 @@ import { JWT } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 async function refreshToken(token: JWT): Promise<JWT> {
-	console.log('RefreshToken: ', token.backendTokens.refreshToken);
+	console.log('refreshing...');
 	const res = await fetch(process.env.BACKEND_URL + '/user/refresh', {
 		method: 'POST',
 		headers: {
 			authorization: `bearer ${token.backendTokens.refreshToken}`,
 		},
 	});
-	console.log('refreshed');
 
 	const response = await res.json();
+	console.log('token refreshed');
 	return {
 		...token,
 		backendTokens: response,
@@ -46,7 +46,7 @@ export const authOptions: NextAuthOptions = {
 
 				const user = await res.json();
 
-				if (user) {
+				if (user && res.ok) {
 					// Any object returned will be saved in `user` property of the JWT
 					return user;
 				} else {
@@ -60,24 +60,26 @@ export const authOptions: NextAuthOptions = {
 	],
 	callbacks: {
 		//Function called then nextAuth generate jwt. This will be called in logIn and when the session is checked
-		async jwt({ token, user }) {
+		async jwt({ token, user, trigger, session }) {
+			if (trigger === 'update' && session?.user) {
+				token.user = session.user;
+			}
+
 			//Check if the jwt callback is called in the login (user included) or not.
-
 			if (user) return { ...token, ...user };
-
 			//Checking expiring time
-			if (new Date().getTime() < token.backendTokens.expiresIn) {
+			const currentDate = new Date().getTime();
+			if (currentDate < (token.backendTokens.expiresIn as number)) {
 				return token;
 			}
 
 			//Refreshing access token
 			const refreshedToken = await refreshToken(token);
-			console.log('Token refreshed: ', refreshedToken);
 			return refreshedToken;
 		},
 
 		//Function called when the session is checked
-		async session({ token, session }) {
+		async session({ token, session, user }) {
 			session.user = token.user;
 			return session;
 		},
