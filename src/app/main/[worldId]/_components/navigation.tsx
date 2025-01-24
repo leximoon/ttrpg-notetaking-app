@@ -37,7 +37,6 @@ export const Navigation = () => {
 
 	// LOADING DOCUMENTS
 	const worldId = pathname.split('/')[2]; //get second element from url which is worldId
-	const currentDocumentId = pathname.split('/')[3]; //get third element from url which is documentId
 
 	// CREATING DOCUMENT
 	const { addDocument } = useDocument();
@@ -116,7 +115,7 @@ export const Navigation = () => {
 					)
 				)}
 			>
-                <TopNavBar currentWorldId={worldId} currentDocumentId={currentDocumentId} />
+                <TopNavBar />
 				<nav className='bg-transparent px-3 py-2 w-full mt-[10px]'>
 					{isCollapsed && (
 						<MenuIcon
