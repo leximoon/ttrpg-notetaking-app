@@ -19,7 +19,10 @@ const config = {
         },
         extend: {
             colors: {
-                background: "hsl(var(--background))",
+                background: {
+                    DEFAULT: "hsl(var(--background))",
+                    muted: "hsl(var(--background-muted))",
+                },
                 primary: {
                     DEFAULT: "hsl(var(--primary))",
                     contrast: "hsl(var(--primary-contrast))",
