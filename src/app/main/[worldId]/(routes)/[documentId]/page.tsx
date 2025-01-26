@@ -8,13 +8,14 @@ import { Skeleton } from "@nextui-org/skeleton";
 import { Editor } from "./_components/Editor";
 import { Button } from "@/components/UI/button";
 import { TagBox } from "@/components/tagBox";
-import { Metadata } from "./_components/Metadata";
+import { MetadataBox } from "./_components/MetadataBox";
 
 //Data imports
 
 import Template from "@/data/templates.json";
 import Data from "@/data/metadataExample.json";
 import { TMetadata } from "@/types/document";
+import { Templates } from "./_components/Templates";
 
 interface DocumentPageProps {
     params: Promise<{ documentId: string }>;
@@ -29,14 +30,18 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
         info: [],
     });
     const { mutate } = editDocument;
-    let parsedMeta: TMetadata = {
-        tags: [],
-        info: [],
-    };
+
+    useEffect(() => {
+        if (!isLoading) {
+            if (document?.metadata) {
+                setMeta(JSON.parse(document?.metadata));
+            }
+        }
+    }, [isLoading]);
 
     const onChange = (content: any, field: string) => {
         let newMeta: TMetadata = meta;
-        console.log();
+
         if (field === "tags") {
             newMeta.tags = content;
             field = "metadata";
@@ -46,7 +51,6 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
             field = "metadata";
         }
         console.log(newMeta);
-
         mutate({
             documentId: documentId,
             field: field,
@@ -68,8 +72,6 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
                 </div>
             </div>
         );
-    } else {
-        if (document?.metadata) parsedMeta = JSON.parse(document?.metadata);
     }
     if (error) {
         console.error("Error fetching document:", error);
@@ -82,18 +84,24 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
     function loadTemplate(name: string) {
         const temp = Template.templates.find((t) => t.name === name);
         const content = temp ? temp.content : null;
+        const metadata = temp ? temp.metadata : null;
         mutate({
             documentId: documentId,
             field: "content",
             content: JSON.stringify(content),
+        });
+        mutate({
+            documentId: documentId,
+            field: "metadata",
+            content: metadata,
         });
     }
 
     return (
         <div className="relative top-[50px] h-[calc(100%-50px)]">
             {document.content ? (
-                <div className="pl-56  flex flex-row justify-between">
-                    <div className="pb-40">
+                <div className="flex flex-row justify-between">
+                    <div className="pb-40 w-4/6 mx-56">
                         <Toolbar initialData={document} />
                         <Editor
                             onChange={(content) => {
@@ -102,64 +110,24 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
                             initialContent={document.content}
                         />
                     </div>
-                    <div className="bg-background-muted/10 w-1/5 h-dvh shadow-md shadow-shadow flex-wrap">
+                    <div className="bg-background-muted/10  shadow-md shadow-shadow flex-wrap ml-auto w-96 ">
                         <TagBox
                             title="TAGS"
-                            tags={parsedMeta?.tags}
+                            tags={meta.tags}
                             onChange={(newTags) => {
                                 onChange(newTags, "tags");
                             }}
                         />
-                        <Metadata
-                            initialData={parsedMeta?.info}
-                            onChange={(content, key) => {
+                        <MetadataBox
+                            initialData={meta.info}
+                            onChange={(content) => {
                                 onChange(content, "meta");
                             }}
                         />
                     </div>
                 </div>
             ) : (
-                <div className="flex h-screen justify-center items-center">
-                    <div className="p-5 bg-background-muted/10 rounded-md flex flex-row gap-5 max-w-3xl flex-wrap">
-                        <Button
-                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
-                            intent="secondary"
-                            variant="dashed"
-                            label="Blank"
-                            onClick={() => loadTemplate("blank")}
-                        ></Button>
-                        <Button
-                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
-                            intent="secondary"
-                            variant="dashed"
-                            label="Template"
-                        ></Button>
-                        <Button
-                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
-                            intent="secondary"
-                            variant="dashed"
-                            label="Template"
-                        ></Button>
-                        <Button
-                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
-                            intent="secondary"
-                            variant="dashed"
-                            label="Template"
-                        ></Button>
-                        <Button
-                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
-                            intent="secondary"
-                            variant="dashed"
-                            label="Template"
-                        ></Button>
-                        <Button
-                            className="w-[30%] flex-grow table-cell text-lg !py-4 !px-20"
-                            intent="secondary"
-                            variant="dashed"
-                            label="Template"
-                        ></Button>
-                    </div>
-                </div>
+                <Templates onLoadTemplate={loadTemplate} />
             )}
         </div>
     );
