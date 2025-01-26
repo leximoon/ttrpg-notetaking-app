@@ -26,7 +26,7 @@ export const Editor = ({
     });
 
     return (
-        <div className="">
+        <div>
             {editor && (
                 <BlockNoteView
                     editor={editor}
