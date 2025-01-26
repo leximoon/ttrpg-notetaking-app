@@ -16,10 +16,12 @@ interface TagBoxProps {
 }
 
 export const TagBox = ({ title, tags, onChange }: TagBoxProps) => {
+    const [tagList, setTagList] = useState<string[]>(tags);
     const authDialogRef = useRef<AddTagDialogRef>(null);
-    const [tagList, setTagList] = useState<string[]>(
-        tags != undefined ? tags : [""]
-    );
+
+    useEffect(() => {
+        setTagList(tags);
+    }, [tags]);
 
     const handleOpening = () => {
         if (authDialogRef.current) {
@@ -30,15 +32,23 @@ export const TagBox = ({ title, tags, onChange }: TagBoxProps) => {
         setTagList((prevData) => [...prevData, tag]);
         onChange([...tagList, tag]);
     };
+    const onDeleteTag = (tag: string) => {
+        const updatedTags = tagList.filter((t) => t !== tag);
+        setTagList(updatedTags);
+        onChange(updatedTags);
+    };
 
     return (
         <div className="min-h-48 p-4">
-            <span className="mb-4 font-bold text-2xl cursor-default">
-                {title}
-            </span>
+            <span className="font-bold text-2xl cursor-default">{title}</span>
 
-            <div className="flex flex-wrap">
-                {tagList.map((t, index) => t && <Tag key={index} label={t} />)}
+            <div className="mt-2 flex flex-wrap">
+                {tagList.map(
+                    (t, index) =>
+                        t && (
+                            <Tag key={index} label={t} onDelete={onDeleteTag} />
+                        )
+                )}
                 <Button
                     className="!mr-2 !mb-2 !px-1 !py-0.5 table-cell !rounded text-text-primary text-xs font-bold"
                     intent="secondary"
