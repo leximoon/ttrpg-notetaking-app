@@ -5,8 +5,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { redirect } from "next/navigation";
 
 //TODO: Create schema files
 export const loginSchema = z.object({
@@ -27,20 +25,15 @@ export const LoginForm = () => {
     });
 
     const { handleSubmit } = methods;
-    const [error, setError] = useState("");
 
     //Form submit handler
     const onSubmit = async function ({ email, password }: LoginInput) {
-        const res = await signIn("credentials", {
+        await signIn("credentials", {
             username: email,
             password: password,
-            redirect: false,
+            redirect: true,
+            callbackUrl: "/panel/worlds",
         });
-        if (!res?.ok) {
-            setError("Invalid email or password. Please try again.");
-        } else {
-            redirect("/panel/worlds");
-        }
     };
 
     return (
@@ -61,9 +54,7 @@ export const LoginForm = () => {
                     name="password"
                     isRequired
                 />
-                {error && (
-                    <span className="text-danger text-center">{error}</span>
-                )}
+
                 <Button label="Login" className="self-center" />
             </form>
         </FormProvider>

@@ -1,12 +1,11 @@
 "use client";
 
 import { Controller, useFormContext } from "react-hook-form";
-import { Input } from "../../input";
 
 //TODO: Extend from HTMLInputAttributes
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
-    isRequired?: boolean;
+    isRequired: boolean;
     errorMessage?: string;
 }
 //TODO: Define errorMessage to display
@@ -14,10 +13,8 @@ export function FormInput({
     placeholder,
     type,
     name,
-    isRequired = false,
+    isRequired,
     errorMessage,
-    disabled,
-    className,
 }: FormInputProps) {
     const {
         control,
@@ -29,17 +26,21 @@ export function FormInput({
             control={control}
             name={name}
             render={({ field }) => (
-                <Input
-                    className={className}
-                    type={type}
-                    placeholder={placeholder}
-                    isRequired={isRequired}
-                    value={field.value}
-                    onChange={field.onChange}
-                    errorMessage={errorMessage}
-                    name={name}
-                    disabled={disabled}
-                />
+                <div className="relative my-2">
+                    <input
+                        type={type}
+                        className="block w-full p-3 text-sm text-text border-2 border-gray-300 rounded-lg bg-background outline-none focus:ring-accent focus:border-accent"
+                        placeholder={placeholder}
+                        required={isRequired}
+                        value={field.value}
+                        onChange={field.onChange}
+                    />
+                    {errorMessage && (
+                        <label className="text-error pl-1 overflow-clip">
+                            {errorMessage}
+                        </label>
+                    )}
+                </div>
             )}
         />
     );

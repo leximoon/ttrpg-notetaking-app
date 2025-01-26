@@ -25,6 +25,7 @@ export function useFetch() {
                     ? `${baseUrl}${url}`
                     : `${proxyUrl}${url}`;
                 // call to the proxy url
+
                 const response = await fetch(fullUrl, {
                     headers: { "Content-Type": "application/json" },
                     method: fetchOptions.method,
@@ -32,6 +33,7 @@ export function useFetch() {
                         ? JSON.stringify(fetchOptions.body)
                         : undefined,
                 });
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -44,7 +46,7 @@ export function useFetch() {
 
                 //return for the callback when using .then
                 return { data: result, error: null, status: response.status };
-            } catch (err) {
+            } catch (err: any) {
                 //If error is catched we set the error and change loading state.
                 //If err is not given or is not an error, we instance a new unknown error
                 setError(

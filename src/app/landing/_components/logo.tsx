@@ -15,7 +15,7 @@ export const Logo = () => {
             width="40"
             alt="Logo"
             />
-        <p className=" font-[Impact] text-3xl text-primary">
+        <p className="font-semibold text-text">
             BookWyrm
         </p>
         </div>
