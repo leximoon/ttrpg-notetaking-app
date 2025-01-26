@@ -19,7 +19,6 @@ export const Editor = ({
 }: EditorProps) => {
     const { resolvedTheme } = useTheme();
 
-    console.log(initialContent);
     const editor: BlockNoteEditor | null = useCreateBlockNote({
         initialContent: initialContent
             ? (JSON.parse(initialContent) as PartialBlock[])
@@ -27,7 +26,7 @@ export const Editor = ({
     });
 
     return (
-        <div className="">
+        <div>
             {editor && (
                 <BlockNoteView
                     editor={editor}

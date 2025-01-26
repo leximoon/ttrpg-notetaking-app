@@ -1,12 +1,6 @@
-import { Document } from "@/types/document";
-import React, { ElementRef, useRef, useState } from "react";
-import TextareaAutosize from "react-textarea-autosize";
-import {
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-} from "@/components/UI/popover";
-import { Button } from "@/components/UI/button";
+import type { Document } from "@/types/document";
+import type React from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDocument } from "@/hooks/useDocument";
 import { Skeleton } from "@nextui-org/skeleton";
 
@@ -14,72 +8,75 @@ interface ToolbarProps {
     initialData: Document;
     preview?: boolean;
 }
-export const Toolbar = ({ initialData, preview = false }: ToolbarProps) => {
-    const inputRef = useRef<ElementRef<"textarea">>(null);
-    const [isEditing, setIsEditing] = useState(false);
-    const [value, setValue] = useState(initialData.title);
 
+/*TODO: Make this component more complex:
+-Add banner image
+-Add better handling of the title
+-Add other functions
+*/
+export const Toolbar = ({ initialData, preview = false }: ToolbarProps) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [title, setTitle] = useState(initialData.title);
+    const inputRef = useRef<HTMLInputElement>(null);
     const { editDocument } = useDocument();
 
-    const { mutate } = editDocument;
-
-    const enableInput = () => {
-        if (preview) return;
-
-        setIsEditing(true);
-        setTimeout(() => {
-            setValue(initialData.title);
+    useEffect(() => {
+        if (isEditing) {
             inputRef.current?.focus();
-        }, 0);
-    };
+        }
+    }, [isEditing]);
 
-    const disableInput = () => setIsEditing(false);
-
-    const onInput = (value: string) => {
-        setValue(value);
-        mutate({
+    const handleTitleChange = (newTitle: string) => {
+        setTitle(newTitle);
+        editDocument.mutate({
             documentId: initialData.id,
             field: "title",
-            content: value || "Untitled",
+            content: newTitle || "Untitled",
         });
     };
 
-    const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
-            event.preventDefault();
-            disableInput();
+            setIsEditing(false);
         }
     };
 
-    return (
-        <div className="px-12 group relative">
-            {!preview && (
-                <div className="flex items-center gap-x-2 group/icon pt-6"></div>
-            )}
+    if (preview) {
+        return (
+            <h1 className="text-5xl font-bold break-words text-text pb-3 w-full min-h-[1.2em] leading-tight">
+                {title}
+            </h1>
+        );
+    }
 
-            {isEditing && !preview ? (
-                <TextareaAutosize
+    return (
+        <div className="px-12 group relative pt-6">
+            {isEditing ? (
+                <input
                     ref={inputRef}
-                    onBlur={disableInput}
-                    onKeyDown={onKeyDown}
-                    value={value}
-                    onChange={(e) => onInput(e.target.value)}
-                    className="text-5xl bg-transparent font-bold break-words outline-none text-text resize-none"
-                ></TextareaAutosize>
+                    value={title}
+                    onChange={(e) => handleTitleChange(e.target.value)}
+                    onBlur={() => setIsEditing(false)}
+                    onKeyDown={handleKeyDown}
+                    className={
+                        "text-5xl font-bold break-words text-text pb-3 w-full min-h-[1.2em] leading-tight bg-transparent outline-none"
+                    }
+                    aria-label="Edit document title"
+                />
             ) : (
-                <div
-                    className="text-5xl font-bold break-words outline-none text-text pb-[11.5px]"
-                    onClick={enableInput}
+                <h1
+                    className={
+                        "text-5xl font-bold break-words text-text pb-3 w-full min-h-[1.2em] leading-tight cursor-text"
+                    }
+                    onClick={() => setIsEditing(true)}
                 >
-                    {initialData.title}
-                </div>
+                    {title}
+                </h1>
             )}
         </div>
     );
 };
 
 Toolbar.Skeleton = function ToolbarSkeleton() {
-    return (
-        <Skeleton className=" p-10 w-full h-[12vh] bg-background-muted/20" />
-    );
+    return <Skeleton className="p-10 w-full h-[12vh] bg-background-muted/20" />;
 };
