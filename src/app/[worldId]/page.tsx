@@ -8,8 +8,7 @@ import { useDocument } from "@/hooks/useDocument";
 
 const DocumentPage = () => {
     
-    const worldId = usePathname().split("/")[2];
-
+    const worldId = usePathname().split("/")[1];
     const { addDocument } = useDocument();
         const handleDocument = () => {
             addDocument.mutate(

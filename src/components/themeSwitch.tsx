@@ -6,11 +6,10 @@ import { useEffect, useState } from "react";
 import { Spinner } from "./UI/spinner";
 
 interface ThemeSwitchProps {
-    label?: string;
-    size?: "s" | "m";
+    label: string;
 }
 
-const ThemeSwitch = ({ label, size = "s" }: ThemeSwitchProps) => {
+const ThemeSwitch = ({ label }: ThemeSwitchProps) => {
     const { setTheme, resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
@@ -30,9 +29,9 @@ const ThemeSwitch = ({ label, size = "s" }: ThemeSwitchProps) => {
         <div className="flex flex-row ">
             <span className="mx-2 font-semibold">{label}</span>
             <Sun className="w-5 mx-2" />
-
+            
             <Switch
-                size={size}
+                size="s"
                 onChange={selectTheme}
                 checked={resolvedTheme === "dark" ? true : false}
             />

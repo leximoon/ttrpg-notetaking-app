@@ -6,11 +6,11 @@ export default function ControlPanelPage() {
         <>
             <div className="w-full h-full flex flex-col">
                 <h2 className="mb-8">My Worlds</h2>
-                <div className="flex flex-col items-center flex-grow px-4">
+                <div className="flex flex-col items-center flex-grow px-14">
                     <div className="h-28 w-full p-3">
                         <NewWorldModal />
                     </div>
-                    <div className="overflow-y-auto flex-grow h-0 w-full px-3">
+                    <div className="overflow-y-scroll flex-grow h-0 w-full px-3">
                         <WorldsList />
                     </div>
                 </div>

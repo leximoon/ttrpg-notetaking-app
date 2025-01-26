@@ -43,7 +43,7 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
                 onSuccess: ({ id }) => {
                     console.log(`World created with id: ${id}`);
                     closeForm();
-                    router.push(`/main/${id}`);
+                    router.push(`/${id}`);
                 },
             }
         );
@@ -59,7 +59,7 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
                     isRequired
                 />
                 <FormTextArea
-                    className="mt-3 w-96 h-32"
+                    className="mb-2 w-96 h-32"
                     placeholder="Enter world description"
                     name="description"
                 />
@@ -70,11 +70,7 @@ export default function NewWorldForm({ closeForm }: { closeForm: () => void }) {
                         You can change this later
                     </span>
                 </div>
-                <Button
-                    intent="secondary"
-                    label="Create world"
-                    className="w-full table-cell"
-                />
+                <Button intent="secondary" label="Create world" fillOut />
             </form>
         </FormProvider>
     );
