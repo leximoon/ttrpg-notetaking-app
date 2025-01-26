@@ -1,17 +1,17 @@
-import {documentsApi} from "@/lib/api/documentsApi";
+import { documentsApi } from "@/lib/api/documentsApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Document } from "@/types/document";
-import { useState } from "react";
+import { Document, TMetadata } from "@/types/document";
+import { useCallback, useEffect, useState } from "react";
+import Template from "@/data/templates.json";
 
 export function useDocument({
     worldId,
-    documentId,
+    documentId = "",
 }: { worldId?: string; documentId?: string } = {}) {
     const queryClient = useQueryClient();
-    const [currentDocumentId, setCurrentDocumentId] = useState<string>(
-        documentId ?? ""
-    );
-    const {createDocument,deleteDocument,getDocumentById,updateDocument} = documentsApi();
+    const { createDocument, deleteDocument, getDocumentById, updateDocument } =
+        documentsApi();
+    const [metadata, setMetadata] = useState<TMetadata>({ tags: [], info: [] });
 
     const addDocument = useMutation({
         mutationFn: async ({
@@ -26,8 +26,6 @@ export function useDocument({
             return createDocument(title, worldId, parentDocumentId);
         },
         onSuccess: ({ id, parentDocumentId }) => {
-            setCurrentDocumentId(id);
-
             queryClient.invalidateQueries({
                 queryKey: ["documents", parentDocumentId ?? "-1"],
             });
@@ -48,9 +46,12 @@ export function useDocument({
         }) => {
             return updateDocument(documentId, field, content);
         },
-        onSuccess: ({ parentDocumentId }) => {
+        onSuccess: ({ id, parentDocumentId }) => {
             queryClient.invalidateQueries({
                 queryKey: ["documents", parentDocumentId ?? "-1"],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["document", id],
             });
         },
     });
@@ -65,23 +66,53 @@ export function useDocument({
         }) => {
             return deleteDocument(documentId);
         },
-        onSuccess: ({parentDocumentId}) => {
+        onSuccess: ({ parentDocumentId }) => {
             queryClient.invalidateQueries({
                 queryKey: ["documents", parentDocumentId ?? "-1"],
             });
         },
     });
 
-    const useCurrentDocument = () =>
-        useQuery<Document | null, Error>({
-            queryKey: ["currentDocument", currentDocumentId],
-            queryFn: () => getDocumentById(currentDocumentId),
+    const getCurrentDocument = (id: string) =>
+        useQuery<Document, Error>({
+            queryKey: ["document", id],
+            queryFn: async () => {
+                const doc: Document = await getDocumentById(id);
+
+                if (doc.metadata) {
+                    console.log(doc.metadata);
+                    setMetadata(JSON.parse(doc.metadata));
+                }
+                return doc;
+            },
+            enabled: !!id,
         });
+
+    const loadTemplate = useCallback(
+        (name: string) => {
+            const temp = Template.templates.find((t) => t.name === name);
+            const content = temp ? temp.content : null;
+            const metadata = temp ? temp.metadata : null;
+            editDocument.mutate({
+                documentId: documentId,
+                field: "content",
+                content: JSON.stringify(content),
+            });
+            editDocument.mutate({
+                documentId: documentId,
+                field: "metadata",
+                content: metadata,
+            });
+        },
+        [documentId, editDocument]
+    );
 
     return {
         addDocument,
         editDocument,
         delDocument,
-        useCurrentDocument,
+        getCurrentDocument,
+        loadTemplate,
+        metadata,
     };
 }

@@ -12,10 +12,9 @@ export default function NewWorldModal() {
     return (
         <>
             <Button
-                className=""
+                className="w-full h-full table-cell text-xl"
                 intent="secondary"
                 variant="dashed"
-                fillOut
                 label="+ New World"
                 onClick={openDialog}
             ></Button>

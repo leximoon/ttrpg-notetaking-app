@@ -5,7 +5,7 @@ import {
     ChevronRight,
     LucideIcon,
     Plus,
-    Trash,
+    Trash2,
 } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
@@ -48,10 +48,10 @@ export const Item = ({
         event.stopPropagation();
         onExpand?.();
     };
-    const {loadDocuments} = documentsApi();
+    const { loadDocuments } = documentsApi();
 
     const pathname = usePathname();
-    const worldId = pathname.split("/")[1]; //get first element from url which is worldId
+    const worldId = pathname.split("/")[2]; //get first element from url which is worldId
 
     // CREATE NEW DOCUMENT
     const { addDocument, delDocument } = useDocument();
@@ -63,19 +63,23 @@ export const Item = ({
             worldId: worldId,
             parentDocumentId: id,
         });
+
     };
 
     //DELETE DOCUMENT AND ITS CHILDREN
-    const deleteRecursive = async (id:string, parentDocumentId?:string) => {
-        delDocument.mutate({documentId: id, parentDocumentId: parentDocumentId})        
+    const deleteRecursive = async (id: string, parentDocumentId?: string) => {
+        delDocument.mutate({
+            documentId: id,
+            parentDocumentId: parentDocumentId,
+        });
 
         //delete all children
-        let documents = await loadDocuments(worldId, id)
-        if (documents){
-            for (let i in documents) 
-                deleteRecursive(documents[i].id, id)
+        let documents = await loadDocuments(worldId, id);
+
+        if (documents) {
+            for (let i in documents) deleteRecursive(documents[i].id, id);
         }
-    }
+    };
 
     const onDelete = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
@@ -127,15 +131,15 @@ export const Item = ({
                         role="button"
                         onClick={onDelete}
                         className="opacity-0 group-hover:opacity-100 h-full ml-auto
-                    rounded-sm hover:bg-secondary "
+                    rounded-sm hover:bg-accent"
                     >
-                        <Trash className="h-4 w-4 text-primary-muted" />
+                        <Trash2 className="h-4 w-4 text-primary-muted" />
                     </div>
                     <div
                         role="button"
                         onClick={onCreate}
                         className="opacity-0 group-hover:opacity-100 h-full ml-auto
-                    rounded-sm hover:bg-secondary "
+                    rounded-sm hover:bg-accent"
                     >
                         <Plus className="h-4 w-4 text-primary-muted" />
                     </div>
