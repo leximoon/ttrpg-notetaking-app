@@ -23,8 +23,6 @@ export function useDocument({
             return createDocument(title, worldId, parentDocumentId);
         },
         onSuccess: ({ id, parentDocumentId }) => {
-            setCurrentDocumentId(id);
-
             queryClient.invalidateQueries({
                 queryKey: ["documents", parentDocumentId ?? "-1"],
             });
