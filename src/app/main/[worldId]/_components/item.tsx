@@ -131,7 +131,7 @@ export const Item = ({
                         role="button"
                         onClick={onDelete}
                         className="opacity-0 group-hover:opacity-100 h-full ml-auto
-                    rounded-sm hover:bg-secondary "
+                    rounded-sm hover:bg-accent"
                     >
                         <Trash2 className="h-4 w-4 text-primary-muted" />
                     </div>
@@ -139,7 +139,7 @@ export const Item = ({
                         role="button"
                         onClick={onCreate}
                         className="opacity-0 group-hover:opacity-100 h-full ml-auto
-                    rounded-sm hover:bg-secondary "
+                    rounded-sm hover:bg-accent"
                     >
                         <Plus className="h-4 w-4 text-primary-muted" />
                     </div>

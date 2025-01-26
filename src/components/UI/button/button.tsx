@@ -9,7 +9,6 @@ const button = cva("button text-text flex items-center gap-1", {
         intent: {
             primary: [""],
             secondary: [""],
-            sidebaritem: [""],
             danger: ["text-text"],
         },
         //Define the style of the button
