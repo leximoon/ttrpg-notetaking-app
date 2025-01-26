@@ -54,7 +54,7 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
     }
 
     return (
-        <div className="relative top-[50px] h-[calc(100%-50px)]">
+        <div className="absolute overflow-y-auto top-[50px] h-[calc(100%-50px)] w-full">
             {document.content ? (
                 <div className="flex flex-row justify-between">
                     {/** This is the document main content, toolbar and editor will be here. */}
