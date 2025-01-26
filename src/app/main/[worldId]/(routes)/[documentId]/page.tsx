@@ -1,21 +1,18 @@
 "use client";
-import { use, useEffect, useState } from "react";
-import { Spinner } from "@/components/UI/spinner";
+import { use, useCallback, useEffect, useState } from "react";
 import { useDocument } from "@/hooks/useDocument";
 
 import { Toolbar } from "./_components/Toolbar";
-import { Skeleton } from "@nextui-org/skeleton";
 import { Editor } from "./_components/Editor";
-import { Button } from "@/components/UI/button";
 import { TagBox } from "@/components/tagBox";
 import { MetadataBox } from "./_components/MetadataBox";
 
 //Data imports
-
 import Template from "@/data/templates.json";
-import Data from "@/data/metadataExample.json";
+
 import { TMetadata } from "@/types/document";
 import { Templates } from "./_components/Templates";
+import { LoadingSkeleton } from "./_components/loadingSkeleton";
 
 interface DocumentPageProps {
     params: Promise<{ documentId: string }>;
@@ -33,45 +30,38 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
 
     useEffect(() => {
         if (!isLoading) {
-            if (document?.metadata) {
-                setMeta(JSON.parse(document?.metadata));
+            setMeta(JSON.parse(document?.metadata ?? '{"tags":[],"info":[]}'));
+        }
+    }, [isLoading, document]);
+
+    const onChange = useCallback(
+        (content: any, field: string) => {
+            const newMeta: TMetadata = { ...meta };
+
+            if (field === "tags") {
+                newMeta.tags = content;
+                field = "metadata";
             }
-        }
-    }, [isLoading]);
+            if (field === "meta") {
+                newMeta.info = content;
+                field = "metadata";
+            }
 
-    const onChange = (content: any, field: string) => {
-        let newMeta: TMetadata = meta;
+            mutate({
+                documentId: documentId,
+                field: field,
+                content: field === "metadata" ? newMeta : content,
+            });
 
-        if (field === "tags") {
-            newMeta.tags = content;
-            field = "metadata";
-        }
-        if (field === "meta") {
-            newMeta.info = content;
-            field = "metadata";
-        }
-        console.log(newMeta);
-        mutate({
-            documentId: documentId,
-            field: field,
-            content: field === "metadata" ? newMeta : content,
-        });
-    };
+            if (field === "metadata") {
+                setMeta(newMeta);
+            }
+        },
+        [meta, documentId, mutate]
+    );
 
     if (isLoading) {
-        return (
-            <div>
-                <Toolbar.Skeleton />
-                <div className="max-w-5xl mt-10 mx-auto">
-                    <div className="space-y-4 pl-8 pt-4">
-                        <Skeleton className="h-14 bg-background-muted/20 rounded-md w-[50%]" />
-                        <Skeleton className="h-4 bg-background-muted/20 rounded-md w-[80%]" />
-                        <Skeleton className="h-4 bg-background-muted/20 rounded-md w-[40%]" />
-                        <Skeleton className="h-4 bg-background-muted/20 rounded-md w-[60%]" />
-                    </div>
-                </div>
-            </div>
-        );
+        return <LoadingSkeleton />;
     }
     if (error) {
         console.error("Error fetching document:", error);
