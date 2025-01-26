@@ -2,9 +2,6 @@
 import { use, useCallback, useEffect, useState } from "react";
 import { useDocument } from "@/hooks/useDocument";
 
-//Data imports
-import Template from "@/data/templates.json";
-
 import { TMetadata } from "@/types/document";
 import { Templates } from "./_components/Templates";
 import { LoadingSkeleton } from "./_components/loadingSkeleton";
@@ -17,23 +14,15 @@ interface DocumentPageProps {
 
 const DocumentPage = ({ params }: DocumentPageProps) => {
     const { documentId } = use(params);
-    const { editDocument, getCurrentDocument } = useDocument();
+    const { metadata, editDocument, getCurrentDocument, loadTemplate } =
+        useDocument({
+            documentId: documentId,
+        });
     const { data: document, isLoading, error } = getCurrentDocument(documentId);
-    const [meta, setMeta] = useState<TMetadata>({
-        tags: [],
-        info: [],
-    });
-    const { mutate } = editDocument;
-
-    useEffect(() => {
-        if (!isLoading) {
-            setMeta(JSON.parse(document?.metadata ?? '{"tags":[],"info":[]}'));
-        }
-    }, [isLoading, document]);
 
     const onChange = useCallback(
         (content: any, field: string) => {
-            const newMeta: TMetadata = { ...meta };
+            const newMeta: TMetadata = { ...metadata };
 
             if (field === "tags") {
                 newMeta.tags = content;
@@ -44,17 +33,13 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
                 field = "metadata";
             }
 
-            mutate({
+            editDocument.mutate({
                 documentId: documentId,
                 field: field,
                 content: field === "metadata" ? newMeta : content,
             });
-
-            if (field === "metadata") {
-                setMeta(newMeta);
-            }
         },
-        [meta, documentId, mutate]
+        [metadata, documentId, editDocument]
     );
 
     if (isLoading) {
@@ -68,22 +53,6 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
         return <div>Document not found!</div>;
     }
 
-    function loadTemplate(name: string) {
-        const temp = Template.templates.find((t) => t.name === name);
-        const content = temp ? temp.content : null;
-        const metadata = temp ? temp.metadata : null;
-        mutate({
-            documentId: documentId,
-            field: "content",
-            content: JSON.stringify(content),
-        });
-        mutate({
-            documentId: documentId,
-            field: "metadata",
-            content: metadata,
-        });
-    }
-
     return (
         <div className="relative top-[50px] h-[calc(100%-50px)]">
             {document.content ? (
@@ -93,7 +62,7 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
                     {/** This is the sidebar for aditional information related to the document
                      * TODO: Make this collapsable?
                      */}
-                    <MetadataSidebar meta={meta} onChange={onChange} />
+                    <MetadataSidebar meta={metadata} onChange={onChange} />
                 </div>
             ) : (
                 /*If the document has no content, a template page will be rendered*/
