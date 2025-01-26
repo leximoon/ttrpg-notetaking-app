@@ -9,7 +9,7 @@ interface MetadataSidebar {
 }
 
 export const MetadataSidebar = ({ meta, onChange }: MetadataSidebar) => (
-    <div className="bg-background-muted/10 shadow-md shadow-shadow flex-wrap ml-auto w-96">
+    <div className="hidden xl:block bg-background-muted/10 shadow-md shadow-shadow flex-wrap w-1/6">
         <TagBox
             title="TAGS"
             tags={meta.tags}

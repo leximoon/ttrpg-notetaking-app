@@ -11,7 +11,7 @@ export const DocumentContent = ({
     document,
     onChange,
 }: DocumentContentProps) => (
-    <div className="pb-40 w-4/6 mx-56">
+    <div className="pl-1 pr-10 md:pl-[20rem] xl:pr-24 pb-40 xl:w-5/6 ">
         <Toolbar initialData={document} />
         <Editor
             onChange={(content) => onChange(content, "content")}
