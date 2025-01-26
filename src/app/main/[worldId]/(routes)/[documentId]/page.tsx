@@ -2,17 +2,14 @@
 import { use, useCallback, useEffect, useState } from "react";
 import { useDocument } from "@/hooks/useDocument";
 
-import { Toolbar } from "./_components/Toolbar";
-import { Editor } from "./_components/Editor";
-import { TagBox } from "@/components/tagBox";
-import { MetadataBox } from "./_components/MetadataBox";
-
 //Data imports
 import Template from "@/data/templates.json";
 
 import { TMetadata } from "@/types/document";
 import { Templates } from "./_components/Templates";
 import { LoadingSkeleton } from "./_components/loadingSkeleton";
+import { MetadataSidebar } from "./_components/MetadataSidebar";
+import { DocumentContent } from "./_components/documentContent";
 
 interface DocumentPageProps {
     params: Promise<{ documentId: string }>;
@@ -91,32 +88,15 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
         <div className="relative top-[50px] h-[calc(100%-50px)]">
             {document.content ? (
                 <div className="flex flex-row justify-between">
-                    <div className="pb-40 w-4/6 mx-56">
-                        <Toolbar initialData={document} />
-                        <Editor
-                            onChange={(content) => {
-                                onChange(content, "content");
-                            }}
-                            initialContent={document.content}
-                        />
-                    </div>
-                    <div className="bg-background-muted/10  shadow-md shadow-shadow flex-wrap ml-auto w-96 ">
-                        <TagBox
-                            title="TAGS"
-                            tags={meta.tags}
-                            onChange={(newTags) => {
-                                onChange(newTags, "tags");
-                            }}
-                        />
-                        <MetadataBox
-                            initialData={meta.info}
-                            onChange={(content) => {
-                                onChange(content, "meta");
-                            }}
-                        />
-                    </div>
+                    {/** This is the document main content, toolbar and editor will be here. */}
+                    <DocumentContent document={document} onChange={onChange} />
+                    {/** This is the sidebar for aditional information related to the document
+                     * TODO: Make this collapsable?
+                     */}
+                    <MetadataSidebar meta={meta} onChange={onChange} />
                 </div>
             ) : (
+                /*If the document has no content, a template page will be rendered*/
                 <Templates onLoadTemplate={loadTemplate} />
             )}
         </div>
