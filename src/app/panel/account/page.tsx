@@ -119,6 +119,7 @@ const AccountPage = () => {
                                 editMode();
                             }}
                             type="button"
+                            intent="secondary"
                         />
                     ) : (
                         <>

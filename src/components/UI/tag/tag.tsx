@@ -10,10 +10,10 @@ interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
 export const Tag = ({ label, onDelete }: TagProps) => {
     return (
         <div
-            className="flex items-center bg-primary mr-2 mb-2 px-2 py-1 rounded transition-all duration-200 ease-in-out
+            className="flex items-center bg-primary/80 dark:bg-primary mr-2 mb-2 px-2 py-1 rounded transition-all duration-200 ease-in-out
                      hover:bg-accent hover:text-text hover:scale-110 hover:cursor-pointer"
         >
-            <span className="text-text-secondary text-xs line font-semibold leading-none mr-2">
+            <span className="text-white dark:text-text-secondary text-xs line font-semibold leading-none mr-2">
                 {label}
             </span>
             <Button

@@ -61,7 +61,7 @@ export const TopNavBar = () => {
 			<div
 				role='button'
 				onClick={onRedirect}
-				className='h-[30px] w-[30px] text-primary/80 rounded-md hover:bg-accent ml-auto place-self-center mr-2 flex'
+				className='h-[30px] w-[30px] text-primary/80 rounded-md hover:bg-secondary-contrast/30 ml-auto place-self-center mr-2 flex'
 			>
 				<Settings className='h-[30px] w-[30px]' />
 			</div>

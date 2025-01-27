@@ -98,7 +98,7 @@ export const Item = ({
             }}
             className={twMerge(
                 clsx(
-                    "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-primary-muted font-medium",
+                    "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-accent/5 flex items-center text-primary-muted font-medium",
                     { "bg-primary/5 text-primary": active }
                 )
             )}
@@ -106,7 +106,7 @@ export const Item = ({
             {!!id && ( // DROPDOWN BUTTON TODO: Change for only if children
                 <div
                     role="button"
-                    className="h-full rounded-sm hover:bg-accent mr-1"
+                    className="h-full rounded-sm hover:bg-secondary-contrast/30 mr-1"
                     onClick={handleExpand}
                 >
                     <ChevronIcon className="h-4 w-4 shrink-0 text-primary-muted/50" />
@@ -131,7 +131,7 @@ export const Item = ({
                         role="button"
                         onClick={onDelete}
                         className="opacity-0 group-hover:opacity-100 h-full ml-auto
-                    rounded-sm hover:bg-accent"
+                    rounded-sm hover:bg-secondary-contrast/30"
                     >
                         <Trash2 className="h-4 w-4 text-primary-muted" />
                     </div>
@@ -139,7 +139,7 @@ export const Item = ({
                         role="button"
                         onClick={onCreate}
                         className="opacity-0 group-hover:opacity-100 h-full ml-auto
-                    rounded-sm hover:bg-accent"
+                    rounded-sm hover:bg-secondary-contrast/30"
                     >
                         <Plus className="h-4 w-4 text-primary-muted" />
                     </div>
