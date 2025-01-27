@@ -52,7 +52,7 @@
                         {
                             "type": "text",
                             "text": "[\"A sample quote or phrase the NPC might commonly say. Important information, or other data\"]",
-                            "styles": { "italic": true, "textColor": "red" }
+                            "styles": { "italic": true, "textColor": "yellow" }
                         }
                     ],
                     "children": []
