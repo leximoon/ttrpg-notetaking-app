@@ -56,7 +56,7 @@ const DocumentPage = ({ params }: DocumentPageProps) => {
     return (
         <div className="absolute overflow-y-auto top-[50px] h-[calc(100%-50px)] w-full">
             {document.content ? (
-                <div className="flex flex-row justify-between">
+                <div className="flex h-full flex-row justify-between">
                     {/** This is the document main content, toolbar and editor will be here. */}
                     <DocumentContent document={document} onChange={onChange} />
                     {/** This is the sidebar for aditional information related to the document
